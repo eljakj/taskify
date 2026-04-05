@@ -9,16 +9,6 @@
       "dueDate": "2026-04-05",
       "order": 0,
       "createdAt": "2026-04-05T14:53:30.172Z"
-    },
-    {
-      "id": "80c3147e-eda6-42fb-a38b-e13c666d35b7",
-      "title": "sadsadasdasd",
-      "description": "asdasddsas",
-      "completed": false,
-      "priority": "medium",
-      "dueDate": "2026-04-05",
-      "order": 1,
-      "createdAt": "2026-04-05T15:15:26.824Z"
     }
   ]
 }
