@@ -1,23 +1,30 @@
 # 📝 Taskify – Fullstack Todo App
 
+## 🚀 Live Demo
+
+Frontend: https://taskify-three-cyan.vercel.app/
+Backend: https://taskify-api-knxa.onrender.com/api/todos
+
+---
+
 A modern fullstack Todo application with advanced UX features such as drag & drop, real-time editing, filtering, and smooth animations.
 
 ---
 
 ## ✨ Features
 
-* ✅ Add, edit, delete tasks
-* 🎯 Priority system (Low, Medium, High)
-* 📅 Due dates with status (Overdue, Today, Tomorrow)
-* 🔍 Search tasks
-* 🧩 Filter (All, Active, Completed)
-* 🔄 Sorting (Manual, Newest, Oldest, Priority, Due date)
-* 🖱 Drag & drop reordering
-* 🌙 Dark / Light mode
-* 🔔 Toast notifications
-* ⚠️ Error handling with retry system
-* ⏳ Loading states + Skeleton UI
-* 🧹 Clear completed tasks with animation
+- ✅ Add, edit, delete tasks
+- 🎯 Priority system (Low, Medium, High)
+- 📅 Due dates with status (Overdue, Today, Tomorrow)
+- 🔍 Search tasks
+- 🧩 Filter (All, Active, Completed)
+- 🔄 Sorting (Manual, Newest, Oldest, Priority, Due date)
+- 🖱 Drag & drop reordering
+- 🌙 Dark / Light mode
+- 🔔 Toast notifications
+- ⚠️ Error handling with retry system
+- ⏳ Loading states + Skeleton UI
+- 🧹 Clear completed tasks with animation
 
 ---
 
@@ -25,14 +32,14 @@ A modern fullstack Todo application with advanced UX features such as drag & dro
 
 ### Frontend
 
-* React (Vite)
-* Tailwind CSS
+- React (Vite)
+- Tailwind CSS
 
 ### Backend
 
-* Node.js
-* Express
-* JSON file database (`db.json`)
+- Node.js
+- Express
+- JSON file database (`db.json`)
 
 ---
 
@@ -143,11 +150,11 @@ server/
 
 ## ⚡ Future Improvements
 
-* User authentication
-* Database integration (MongoDB / PostgreSQL)
-* Task categories / tags
-* Notifications / reminders
-* Mobile optimization
+- User authentication
+- Database integration (MongoDB / PostgreSQL)
+- Task categories / tags
+- Notifications / reminders
+- Mobile optimization
 
 ---
 
