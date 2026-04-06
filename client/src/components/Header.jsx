@@ -3,11 +3,11 @@ import NotificationCenter from "./NotificationCenter";
 
 function LogoMark() {
   return (
-    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-sky-500 shadow-lg shadow-indigo-500/25">
+    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-sky-500 shadow-lg shadow-indigo-500/25 sm:h-14 sm:w-14">
       <svg
         viewBox="0 0 24 24"
         fill="none"
-        className="h-7 w-7 text-white"
+        className="h-6 w-6 text-white sm:h-7 sm:w-7"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -48,13 +48,13 @@ export default function Header({
   clearNotifications,
 }) {
   return (
-    <header className="mb-8 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex items-center gap-4">
+    <header className="mb-6 flex flex-col gap-4 sm:mb-8 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-start gap-3 sm:items-center sm:gap-4">
         <LogoMark />
 
-        <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-black tracking-tight text-zinc-950 dark:text-white">
+        <div className="min-w-0">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <h1 className="text-2xl font-black tracking-tight text-zinc-950 sm:text-3xl dark:text-white">
               Taskify
             </h1>
             <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-indigo-600 dark:border-indigo-500/30 dark:bg-indigo-500/10 dark:text-indigo-300">
@@ -68,7 +68,7 @@ export default function Header({
         </div>
       </div>
 
-      <div className="flex items-center gap-3 self-end sm:self-auto">
+      <div className="flex flex-wrap items-center gap-3 self-start sm:self-auto">
         <NotificationCenter
           notifications={notifications}
           dismissNotification={dismissNotification}

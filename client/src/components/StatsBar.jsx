@@ -27,17 +27,17 @@ export default function StatsBar({ total, active, completed, overdue }) {
   ];
 
   return (
-    <div className="mb-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-2 xl:grid-cols-4">
       {cards.map((card) => (
         <div
           key={card.label}
-          className={`rounded-3xl border p-4 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md ${card.className}`}
+          className={`rounded-2xl border p-3 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl sm:p-4 ${card.className}`}
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] opacity-70">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] opacity-70 sm:text-xs">
             {card.label}
           </p>
 
-          <p className="mt-3 text-3xl font-black tracking-tight">
+          <p className="mt-2 text-2xl font-black tracking-tight sm:mt-3 sm:text-3xl">
             {card.value}
           </p>
         </div>

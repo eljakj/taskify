@@ -27,13 +27,13 @@ export default function FilterBar({
   hasTodos,
 }) {
   return (
-    <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-      <div className="grid gap-3 sm:grid-cols-2">
+    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+      <div className="grid w-full gap-3 sm:grid-cols-2">
         <div className="relative">
           <select
             value={filter}
             onChange={(event) => setFilter(event.target.value)}
-            className="w-full cursor-pointer appearance-none rounded-2xl border border-zinc-200 bg-white/85 px-4 py-3 pr-10 text-sm font-medium text-zinc-700 shadow-sm outline-none transition focus:border-indigo-600 focus:ring-0 dark:border-slate-700 dark:bg-slate-900/85 dark:text-slate-100 dark:focus:border-indigo-500 dark:focus:ring-0"
+            className="min-h-[42px] w-full cursor-pointer appearance-none rounded-xl border border-zinc-200 bg-white/85 px-4 py-3 pr-10 text-sm font-medium text-zinc-700 shadow-sm outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-900/85 dark:text-slate-100 dark:focus:border-indigo-500 dark:focus:ring-0"
           >
             <option value="all">All tasks</option>
             <option value="active">Active tasks</option>
@@ -49,7 +49,7 @@ export default function FilterBar({
           <select
             value={sortBy}
             onChange={(event) => setSortBy(event.target.value)}
-            className="w-full cursor-pointer appearance-none rounded-2xl border border-zinc-200 bg-white/85 px-4 py-3 pr-10 text-sm font-medium text-zinc-700 shadow-sm outline-none transition focus:border-indigo-600 focus:ring-0 dark:border-slate-700 dark:bg-slate-900/85 dark:text-slate-100 dark:focus:border-indigo-500 dark:focus:ring-0"
+            className="min-h-[42px] w-full cursor-pointer appearance-none rounded-xl border border-zinc-200 bg-white/85 px-4 py-3 pr-10 text-sm font-medium text-zinc-700 shadow-sm outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-900/85 dark:text-slate-100 dark:focus:border-indigo-500 dark:focus:ring-0"
           >
             <option value="manual">Manual order</option>
             <option value="newest">Newest first</option>
@@ -68,7 +68,7 @@ export default function FilterBar({
         type="button"
         onClick={toggleAllCompleted}
         disabled={!hasTodos}
-        className="cursor-pointer rounded-2xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-zinc-950/10 transition hover:-translate-y-0.5 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-indigo-600 dark:shadow-indigo-600/20"
+        className="min-h-[42px] w-full cursor-pointer rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-zinc-950/10 transition hover:-translate-y-0.5 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:rounded-2xl dark:bg-indigo-600 dark:shadow-indigo-600/20"
       >
         {allCompleted ? "Deselect all" : "Select all"}
       </button>

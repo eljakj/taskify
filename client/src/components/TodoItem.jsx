@@ -144,7 +144,7 @@ export default function TodoItem({
       draggable={!isEditing && !isSaving}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      className={`flex flex-col gap-4 rounded-3xl border p-4 shadow-sm backdrop-blur transition-all duration-200 sm:flex-row sm:items-start sm:justify-between ${
+      className={`flex flex-col gap-4 rounded-2xl border p-3 shadow-sm backdrop-blur transition-all duration-200 sm:rounded-3xl sm:p-4 sm:flex-row sm:items-start sm:justify-between ${
         isDragging
           ? "scale-[0.98] opacity-50"
           : "hover:-translate-y-0.5 hover:shadow-md"
@@ -217,7 +217,7 @@ export default function TodoItem({
                 value={editedTitle}
                 onChange={(event) => setEditedTitle(event.target.value)}
                 disabled={isSaving}
-                className="w-full rounded-2xl border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+                className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
               />
 
               <textarea
@@ -225,7 +225,7 @@ export default function TodoItem({
                 onChange={(event) => setEditedDescription(event.target.value)}
                 rows={4}
                 disabled={isSaving}
-                className="w-full resize-none rounded-2xl border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+                className="w-full resize-none rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
               />
 
               <div className="grid gap-3 sm:grid-cols-2">
@@ -233,7 +233,7 @@ export default function TodoItem({
                   value={editedPriority}
                   onChange={(event) => setEditedPriority(event.target.value)}
                   disabled={isSaving}
-                  className="cursor-pointer rounded-2xl border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+                  className="cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
                 >
                   <option value="low">Low priority</option>
                   <option value="medium">Medium priority</option>
@@ -251,17 +251,17 @@ export default function TodoItem({
                     onChange={(event) => setEditedDueDate(event.target.value)}
                     onFocus={!isSaving ? openEditedDatePicker : undefined}
                     disabled={isSaving}
-                    className="w-full cursor-pointer rounded-2xl border border-zinc-200 bg-white px-3 py-2.5 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 focus:ring-0 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500 dark:focus:ring-0"
+                    className="w-full cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500 dark:focus:ring-0"
                   />
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                 <button
                   type="button"
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="cursor-pointer rounded-xl bg-indigo-600 px-3 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-indigo-600"
+                  className="w-full cursor-pointer rounded-xl bg-indigo-600 px-3 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto dark:bg-indigo-600"
                 >
                   {isSaving ? "Saving..." : "Save"}
                 </button>
@@ -269,7 +269,7 @@ export default function TodoItem({
                   type="button"
                   onClick={handleCancel}
                   disabled={isSaving}
-                  className="cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+                  className="w-full cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
                 >
                   Cancel
                 </button>
@@ -279,7 +279,7 @@ export default function TodoItem({
             <>
               <div className="flex flex-wrap items-center gap-2">
                 <h3
-                  className={`break-words whitespace-pre-wrap text-base font-semibold text-zinc-900 dark:text-zinc-100 ${
+                  className={`break-words whitespace-pre-wrap text-sm font-semibold text-zinc-900 sm:text-base dark:text-zinc-100 ${
                     todo.completed ? "line-through opacity-50" : ""
                   }`}
                 >
@@ -312,7 +312,7 @@ export default function TodoItem({
               )}
 
               {todo.description && (
-                <p className="mt-2 break-words whitespace-pre-wrap text-sm leading-6 text-zinc-500 dark:text-slate-400">
+                <p className="mt-2 break-words whitespace-pre-wrap text-xs leading-6 text-zinc-500 sm:text-sm dark:text-slate-400">
                   {todo.description}
                 </p>
               )}
@@ -327,7 +327,7 @@ export default function TodoItem({
             type="button"
             onClick={() => setIsEditing(true)}
             disabled={isSaving}
-            className="cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            className="min-h-[42px] cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             Edit
           </button>
@@ -335,7 +335,7 @@ export default function TodoItem({
             type="button"
             onClick={() => requestDeleteTodo(todo)}
             disabled={isSaving}
-            className="cursor-pointer rounded-xl border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-red-500/20 dark:text-red-300 dark:hover:bg-red-500/10"
+            className="min-h-[42px] cursor-pointer rounded-xl border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-red-500/20 dark:text-red-300 dark:hover:bg-red-500/10"
           >
             Delete
           </button>

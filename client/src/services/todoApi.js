@@ -19,100 +19,125 @@ const parseJsonSafely = async (response) => {
   }
 };
 
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+
+  return {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  };
+};
+
 export const getTodos = async () => {
-  const response = await fetch(API_URL);
+  const response = await fetch(API_URL, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+
+  const data = await parseJsonSafely(response);
 
   if (!response.ok) {
-    throw new Error("Failed to fetch todos.");
+    throw new Error(data?.message || "Failed to fetch todos.");
   }
 
-  return (await parseJsonSafely(response)) ?? [];
+  return data ?? [];
 };
 
 export const createTodo = async (todoData) => {
   const response = await fetch(API_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(todoData),
   });
 
+  const data = await parseJsonSafely(response);
+
   if (!response.ok) {
-    throw new Error("Failed to create todo.");
+    throw new Error(data?.message || "Failed to create todo.");
   }
 
-  return await parseJsonSafely(response);
+  return data;
 };
 
 export const updateTodo = async (id, updatedFields) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify(updatedFields),
   });
 
+  const data = await parseJsonSafely(response);
+
   if (!response.ok) {
-    throw new Error("Failed to update todo.");
+    throw new Error(data?.message || "Failed to update todo.");
   }
 
-  return await parseJsonSafely(response);
+  return data;
 };
 
 export const reorderTodos = async (orderedIds) => {
   const response = await fetch(`${API_URL}/reorder`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify({ orderedIds }),
   });
 
+  const data = await parseJsonSafely(response);
+
   if (!response.ok) {
-    throw new Error("Failed to reorder todos.");
+    throw new Error(data?.message || "Failed to reorder todos.");
   }
 
-  return await parseJsonSafely(response);
+  return data;
 };
 
 export const setAllTodosCompleted = async (completed) => {
   const response = await fetch(`${API_URL}/set-all-completed`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: getAuthHeaders(),
     body: JSON.stringify({ completed }),
   });
 
+  const data = await parseJsonSafely(response);
+
   if (!response.ok) {
-    throw new Error("Failed to update all todos.");
+    throw new Error(data?.message || "Failed to update all todos.");
   }
 
-  return (await parseJsonSafely(response)) ?? [];
+  return data ?? [];
 };
 
 export const removeTodo = async (id) => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
+  const data = await parseJsonSafely(response);
+
   if (!response.ok) {
-    throw new Error("Failed to delete todo.");
+    throw new Error(data?.message || "Failed to delete todo.");
   }
 
-  return await parseJsonSafely(response);
+  return data;
 };
 
 export const clearCompleted = async () => {
   const response = await fetch(API_URL, {
     method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   });
 
+  const data = await parseJsonSafely(response);
+
   if (!response.ok) {
-    throw new Error("Failed to clear completed todos.");
+    throw new Error(data?.message || "Failed to clear completed todos.");
   }
 
-  return await parseJsonSafely(response);
+  return data;
 };

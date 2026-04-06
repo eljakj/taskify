@@ -2,12 +2,11 @@
 
 ## 🚀 Live Demo
 
-- Frontend: https://taskify-three-cyan.vercel.app/
-- Backend: https://taskify-api-knxa.onrender.com/api/todos/
+Frontend: https://taskify-three-cyan.vercel.app/
+Backend: https://taskify-api-knxa.onrender.com
 
----
-
-A modern fullstack Todo application with advanced UX features such as drag & drop, real-time editing, filtering, and smooth animations.
+A fullstack Todo application with authentication, user-specific data, and advanced task management features.
+Built with React, Node.js, Express, and MongoDB.
 
 ---
 
@@ -15,16 +14,20 @@ A modern fullstack Todo application with advanced UX features such as drag & dro
 
 - ✅ Add, edit, delete tasks
 - 🎯 Priority system (Low, Medium, High)
-- 📅 Due dates with status (Overdue, Today, Tomorrow)
-- 🔍 Search tasks
-- 🧩 Filter (All, Active, Completed)
-- 🔄 Sorting (Manual, Newest, Oldest, Priority, Due date)
+- 📅 Due dates with smart status (Overdue, Today, Tomorrow)
+- 🔍 Real-time search
+- 🧩 Filtering (All, Active, Completed)
+- 🔄 Advanced sorting (Manual, Newest, Oldest, Priority, Due date)
 - 🖱 Drag & drop reordering
 - 🌙 Dark / Light mode
 - 🔔 Toast notifications
 - ⚠️ Error handling with retry system
 - ⏳ Loading states + Skeleton UI
 - 🧹 Clear completed tasks with animation
+- ☁️ Persistent cloud database with MongoDB Atlas
+- 🔐 User authentication with JWT
+- 👤 User-specific todos
+- 🔒 Protected API routes
 
 ---
 
@@ -39,7 +42,28 @@ A modern fullstack Todo application with advanced UX features such as drag & dro
 
 - Node.js
 - Express
-- JSON file database (`db.json`)
+- MongoDB Atlas
+- Mongoose
+- JWT
+- bcryptjs
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file inside the `server` folder:
+
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_super_secret_key
+```
+
+Create a `.env` file inside the `client` folder:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
 
 ---
 
@@ -142,7 +166,6 @@ client/
 
 server/
  ├── server.js
- ├── db.json
  ├── package.json
 ```
 
@@ -150,11 +173,26 @@ server/
 
 ## ⚡ Future Improvements
 
-- User authentication
-- Database integration (MongoDB / PostgreSQL)
-- Task categories / tags
-- Notifications / reminders
-- Mobile optimization
+- 🗂 Task categories / tags
+- 🔔 Notifications / reminders
+- 📱 Mobile optimization
+- 📊 Analytics dashboard
+- 🎨 User-specific theme settings
+
+---
+
+## 🔗 API Endpoints
+
+### Auth
+- POST /api/auth/register
+- POST /api/auth/login
+- GET /api/auth/me
+
+### Todos
+- GET /api/todos
+- POST /api/todos
+- PUT /api/todos/:id
+- DELETE /api/todos/:id
 
 ---
 

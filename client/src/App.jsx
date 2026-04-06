@@ -8,9 +8,12 @@ import TodoList from "./components/TodoList";
 import SearchBar from "./components/SearchBar";
 import ConfirmModal from "./components/ConfirmModal";
 import ToastContainer from "./components/ToastContainer";
-import TodoListSkeleton from "./components/TodoListSkeleton"
-import ErrorState from "./components/ErrorState";;
+import TodoListSkeleton from "./components/TodoListSkeleton";
+import ErrorState from "./components/ErrorState";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import { useTheme } from "./hooks/useTheme";
+import { getCurrentUser } from "./services/authApi";
 import {
   getTodos,
   createTodo,
@@ -42,6 +45,13 @@ const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function App() {
   const { theme, toggleTheme } = useTheme();
+
+  const [authMode, setAuthMode] = useState("login");
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
 
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -83,6 +93,51 @@ export default function App() {
     setNotifications([]);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    setTodos([]);
+    setErrorMessage("");
+    setAuthMode("login");
+    pushNotification("Logged out");
+  };
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        setIsAuthChecking(false);
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const currentUser = await getCurrentUser(token);
+        setUser(currentUser);
+      } catch (error) {
+        console.error(error);
+
+        const message = error.message?.toLowerCase() || "";
+
+        if (
+          message.includes("invalid token") ||
+          message.includes("unauthorized") ||
+          message.includes("user not found")
+        ) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          setUser(null);
+        }
+      } finally {
+        setIsAuthChecking(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
   const fetchTodos = async ({ retry = false } = {}) => {
     try {
       if (retry) {
@@ -96,9 +151,16 @@ export default function App() {
       setTodos(data);
     } catch (error) {
       console.error(error);
-      setErrorMessage(
-        "Failed to load todos from server. Please check if the backend is running.",
-      );
+
+      if (
+        error.message?.toLowerCase().includes("unauthorized") ||
+        error.message?.toLowerCase().includes("invalid token")
+      ) {
+        handleLogout();
+        return;
+      }
+
+      setErrorMessage("Failed to load todos from server.");
       pushNotification("Failed to load todos", "error");
     } finally {
       setIsLoading(false);
@@ -107,8 +169,14 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (!user) {
+      setTodos([]);
+      setIsLoading(false);
+      return;
+    }
+
     fetchTodos();
-  }, []);
+  }, [user]);
 
   const normalizedTodos = useMemo(() => {
     return todos.map((todo, index) => ({
@@ -172,7 +240,7 @@ export default function App() {
       return true;
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to add todo.");
+      setErrorMessage(error.message || "Failed to add todo.");
       pushNotification("Failed to add task", "error");
       return false;
     } finally {
@@ -203,7 +271,7 @@ export default function App() {
       );
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to update todo.");
+      setErrorMessage(error.message || "Failed to update todo.");
       pushNotification("Failed to update task", "error");
     }
   };
@@ -223,7 +291,7 @@ export default function App() {
       );
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to update all todos.");
+      setErrorMessage(error.message || "Failed to update all todos.");
       pushNotification("Failed to update all todos", "error");
     }
   };
@@ -245,7 +313,7 @@ export default function App() {
       pushNotification("Task deleted");
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to delete todo.");
+      setErrorMessage(error.message || "Failed to delete todo.");
       pushNotification("Failed to delete task", "error");
     }
   };
@@ -285,7 +353,7 @@ export default function App() {
       return true;
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to edit todo.");
+      setErrorMessage(error.message || "Failed to edit todo.");
       pushNotification("Failed to update task", "error");
       return false;
     } finally {
@@ -310,7 +378,7 @@ export default function App() {
       pushNotification("Completed tasks cleared");
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to clear completed todos.");
+      setErrorMessage(error.message || "Failed to clear completed todos.");
       pushNotification("Failed to clear completed tasks", "error");
     }
   };
@@ -404,7 +472,7 @@ export default function App() {
       pushNotification("Task order updated");
     } catch (error) {
       console.error(error);
-      setErrorMessage("Failed to save todo order.");
+      setErrorMessage(error.message || "Failed to save todo order.");
       pushNotification("Failed to save task order", "error");
 
       try {
@@ -475,6 +543,28 @@ export default function App() {
     return result;
   }, [normalizedTodos, filter, searchTerm, sortBy]);
 
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-neutral-950 text-zinc-900 dark:text-white">
+        Checking authentication...
+      </div>
+    );
+  }
+
+  if (!user) {
+    return authMode === "login" ? (
+      <LoginPage
+        onLogin={(loggedInUser) => setUser(loggedInUser)}
+        onSwitchToRegister={() => setAuthMode("register")}
+      />
+    ) : (
+      <RegisterPage
+        onRegister={(registeredUser) => setUser(registeredUser)}
+        onSwitchToLogin={() => setAuthMode("login")}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.10),_transparent_35%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)] text-zinc-900 transition-colors duration-300 dark:bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.22),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_100%)] dark:text-white">
       <ConfirmModal
@@ -489,7 +579,24 @@ export default function App() {
         isLoading={isConfirmLoading}
       />
 
-      <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
+        <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-white/60 bg-white/70 px-4 py-3 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/70 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-sm text-zinc-500 dark:text-slate-400">
+              Logged in as
+            </p>
+            <p className="font-semibold">{user.name}</p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm font-medium transition hover:bg-zinc-100 dark:border-slate-700 dark:hover:bg-slate-800 sm:w-auto"
+          >
+            Logout
+          </button>
+        </div>
+
         <Header
           theme={theme}
           toggleTheme={toggleTheme}
@@ -512,7 +619,7 @@ export default function App() {
           overdue={overdueCount}
         />
 
-        <section className="rounded-[2rem] border border-white/60 bg-white/75 p-5 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur-xl transition-colors duration-300 sm:p-6 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+        <section className="rounded-[1.5rem] border border-white/60 bg-white/75 p-3 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur-xl transition-colors duration-300 sm:rounded-[2rem] sm:p-6 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
           <TodoForm addTodo={addTodo} isAdding={isAddingTodo} />
 
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
