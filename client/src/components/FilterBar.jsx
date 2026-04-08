@@ -27,10 +27,8 @@ export default function FilterBar({
   hasTodos,
 }) {
   return (
-    <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-      {/* SELECTS */}
-      <div className="grid w-full gap-3 sm:grid-cols-2">
-        {/* FILTER */}
+    <div className="mb-5 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+      <div className="grid w-full gap-3 sm:grid-cols-2 lg:flex-1">
         <div className="relative">
           <select
             value={filter}
@@ -47,7 +45,6 @@ export default function FilterBar({
           </span>
         </div>
 
-        {/* SORT */}
         <div className="relative">
           <select
             value={sortBy}
@@ -67,12 +64,11 @@ export default function FilterBar({
         </div>
       </div>
 
-      {/* BUTTON */}
       <button
         type="button"
         onClick={toggleAllCompleted}
         disabled={!hasTodos}
-        className="w-full cursor-pointer rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-zinc-950/10 transition hover:-translate-y-0.5 hover:opacity-95 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto sm:rounded-2xl dark:bg-indigo-600 dark:shadow-indigo-600/20"
+        className="min-h-[44px] w-full cursor-pointer whitespace-nowrap rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-zinc-950/10 transition hover:-translate-y-0.5 hover:opacity-95 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 lg:w-auto lg:min-w-[140px] lg:rounded-2xl dark:bg-indigo-600 dark:shadow-indigo-600/20"
       >
         {allCompleted ? "Deselect all" : "Select all"}
       </button>
