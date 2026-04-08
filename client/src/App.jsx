@@ -67,6 +67,7 @@ export default function App() {
   const [isAddingTodo, setIsAddingTodo] = useState(false);
   const [savingTodoId, setSavingTodoId] = useState(null);
   const [isConfirmLoading, setIsConfirmLoading] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const pushNotification = (message, type = "success") => {
     const id = `${Date.now()}-${Math.random()}`;
@@ -89,18 +90,21 @@ export default function App() {
     setNotifications((prev) => prev.filter((item) => item.id !== id));
   };
 
-  const clearNotifications = () => {
-    setNotifications([]);
-  };
-
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-    setTodos([]);
-    setErrorMessage("");
-    setAuthMode("login");
-    pushNotification("Logged out");
+    if (isLoggingOut) return;
+
+    setIsLoggingOut(true);
+
+    setTimeout(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setUser(null);
+      setTodos([]);
+      setErrorMessage("");
+      setAuthMode("login");
+      pushNotification("Logged out");
+      setIsLoggingOut(false);
+    }, 600);
   };
 
   useEffect(() => {
@@ -545,7 +549,7 @@ export default function App() {
 
   if (isAuthChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-neutral-950 text-zinc-900 dark:text-white">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-zinc-900 dark:bg-neutral-950 dark:text-white">
         Checking authentication...
       </div>
     );
@@ -580,29 +584,12 @@ export default function App() {
       />
 
       <div className="mx-auto max-w-5xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
-        <div className="mb-4 flex flex-col gap-3 rounded-2xl border border-white/60 bg-white/70 px-4 py-3 shadow-sm backdrop-blur dark:border-white/10 dark:bg-slate-900/70 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-sm text-zinc-500 dark:text-slate-400">
-              Logged in as
-            </p>
-            <p className="font-semibold">{user.name}</p>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="w-full rounded-xl border border-zinc-300 px-4 py-2 text-sm font-medium transition hover:bg-zinc-100 dark:border-slate-700 dark:hover:bg-slate-800 sm:w-auto"
-          >
-            Logout
-          </button>
-        </div>
-
         <Header
           theme={theme}
           toggleTheme={toggleTheme}
-          notifications={notifications}
-          dismissNotification={dismissNotification}
-          clearNotifications={clearNotifications}
+          user={user}
+          onLogout={handleLogout}
+          isLoggingOut={isLoggingOut}
         />
 
         <StatsBar
