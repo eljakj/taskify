@@ -32,16 +32,16 @@ export default function ConfirmModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 px-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/55 px-3 py-4 backdrop-blur-sm sm:px-4"
       onClick={!isLoading ? onCancel : undefined}
     >
       <div
-        className="w-full max-w-md animate-[modalIn_180ms_ease-out] rounded-[2rem] border border-zinc-200 bg-white p-6 shadow-2xl dark:border-slate-800 dark:bg-slate-900"
+        className="w-full max-w-md animate-[modalIn_180ms_ease-out] rounded-[1.5rem] border border-zinc-200 bg-white p-4 shadow-2xl sm:rounded-[2rem] sm:p-6 dark:border-slate-800 dark:bg-slate-900"
         onClick={(event) => event.stopPropagation()}
       >
-        <div className="mb-4 flex items-start gap-3">
+        <div className="mb-5 flex items-start gap-3">
           <div
-            className={`mt-0.5 flex h-11 w-11 items-center justify-center rounded-2xl text-lg font-bold ${
+            className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-base font-bold sm:h-11 sm:w-11 sm:rounded-2xl sm:text-lg ${
               isDanger
                 ? "bg-red-100 text-red-600 dark:bg-red-500/10 dark:text-red-300"
                 : "bg-indigo-100 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-300"
@@ -50,8 +50,8 @@ export default function ConfirmModal({
             {isDanger ? "!" : "?"}
           </div>
 
-          <div>
-            <h2 className="text-xl font-bold text-zinc-900 dark:text-white">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-lg font-bold text-zinc-900 sm:text-xl dark:text-white">
               {title}
             </h2>
 
@@ -66,7 +66,7 @@ export default function ConfirmModal({
             type="button"
             onClick={onCancel}
             disabled={isLoading}
-            className="cursor-pointer rounded-2xl border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            className="w-full cursor-pointer rounded-xl border border-zinc-200 px-4 py-2.5 text-sm font-semibold text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:rounded-2xl dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             {cancelText}
           </button>
@@ -75,7 +75,7 @@ export default function ConfirmModal({
             type="button"
             onClick={onConfirm}
             disabled={isLoading}
-            className={`cursor-pointer rounded-2xl px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-70 ${
+            className={`w-full cursor-pointer rounded-xl px-4 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:rounded-2xl ${
               isDanger
                 ? "bg-red-500 shadow-red-500/20 dark:bg-red-600"
                 : "bg-indigo-600 shadow-indigo-600/20"

@@ -79,7 +79,7 @@ export default function TodoForm({ addTodo, isAdding }) {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a new task..."
         disabled={isAdding}
-        className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-sm text-zinc-800 shadow-sm outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl sm:px-5 sm:py-4 sm:text-base dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+        className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-sm text-zinc-800 shadow-sm outline-none transition focus:border-indigo-600 sm:rounded-2xl sm:px-5 sm:py-4 sm:text-base dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-500"
       />
 
       <textarea
@@ -88,11 +88,11 @@ export default function TodoForm({ addTodo, isAdding }) {
         placeholder="Add description..."
         rows={4}
         disabled={isAdding}
-        className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-sm text-zinc-800 shadow-sm outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl sm:px-5 sm:py-4 sm:text-base dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+        className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-sm text-zinc-800 shadow-sm outline-none transition focus:border-indigo-600 sm:rounded-2xl sm:px-5 sm:py-4 sm:text-base dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-500"
       />
 
       <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-sm sm:rounded-2xl dark:border-slate-700 dark:bg-slate-900/90">
+        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-sm sm:rounded-2xl sm:p-4 dark:border-slate-700 dark:bg-slate-900/90">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-slate-400">
             Priority
           </p>
@@ -107,7 +107,7 @@ export default function TodoForm({ addTodo, isAdding }) {
                   type="button"
                   onClick={() => setPriority(item.value)}
                   disabled={isAdding}
-                  className={`flex min-h-[42px] cursor-pointer items-center justify-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-60 sm:rounded-full ${
+                  className={`flex min-h-[44px] cursor-pointer items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:rounded-full ${
                     active ? item.active : item.idle
                   }`}
                 >
@@ -119,13 +119,13 @@ export default function TodoForm({ addTodo, isAdding }) {
           </div>
         </div>
 
-        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-sm sm:rounded-2xl dark:border-slate-700 dark:bg-slate-900/90">
+        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-sm sm:rounded-2xl sm:p-4 dark:border-slate-700 dark:bg-slate-900/90">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-slate-400">
             Due date
           </p>
 
           <div
-            className="relative cursor-pointer"
+            className="relative"
             onClick={!isAdding ? openDatePicker : undefined}
           >
             <input
@@ -135,7 +135,7 @@ export default function TodoForm({ addTodo, isAdding }) {
               onChange={(e) => setDueDate(e.target.value)}
               onFocus={!isAdding ? openDatePicker : undefined}
               disabled={isAdding}
-              className="min-h-[42px] w-full cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 focus:ring-0 sm:rounded-2xl sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500 dark:focus:ring-0"
+              className="min-h-[44px] w-full cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 sm:rounded-2xl sm:px-4 sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500"
             />
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function TodoForm({ addTodo, isAdding }) {
       <button
         type="submit"
         disabled={isAdding}
-        className="w-full cursor-pointer rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 sm:rounded-2xl sm:py-4 sm:text-base dark:bg-indigo-600"
+        className="w-full cursor-pointer rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 sm:rounded-2xl sm:py-4 sm:text-base dark:bg-indigo-600"
       >
         {isAdding ? "Adding..." : "Add task"}
       </button>

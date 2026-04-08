@@ -1,7 +1,7 @@
 export default function StatsBar({ total, active, completed, overdue }) {
   const cards = [
     {
-      label: "Total tasks",
+      label: "Total",
       value: total,
       className:
         "border-zinc-200 bg-white/80 text-zinc-900 dark:border-slate-700 dark:bg-slate-900/70 dark:text-white",
@@ -27,11 +27,11 @@ export default function StatsBar({ total, active, completed, overdue }) {
   ];
 
   return (
-    <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+    <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {cards.map((card) => (
         <div
           key={card.label}
-          className={`rounded-2xl border p-3 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md sm:rounded-3xl sm:p-4 ${card.className}`}
+          className={`rounded-2xl border p-3 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98] sm:rounded-3xl sm:p-4 ${card.className}`}
         >
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] opacity-70 sm:text-xs">
             {card.label}

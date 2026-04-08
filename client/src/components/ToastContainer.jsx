@@ -18,7 +18,7 @@ export default function ToastContainer({ notifications, dismissNotification }) {
   if (notifications.length === 0) return null;
 
   return (
-    <div className="pointer-events-none fixed bottom-4 right-4 z-[60] flex w-full max-w-sm flex-col gap-3 sm:bottom-6 sm:right-6">
+    <div className="pointer-events-none fixed inset-x-3 bottom-3 z-[60] flex flex-col gap-3 sm:inset-x-auto sm:bottom-6 sm:right-6 sm:w-full sm:max-w-sm">
       {notifications.slice(0, 4).map((notification) => (
         <div
           key={notification.id}
@@ -34,7 +34,9 @@ export default function ToastContainer({ notifications, dismissNotification }) {
             </div>
 
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold">{notification.message}</p>
+              <p className="break-words text-sm font-semibold">
+                {notification.message}
+              </p>
               <p className="mt-1 text-xs text-white/80">
                 {notification.createdAt}
               </p>

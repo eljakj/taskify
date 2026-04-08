@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL || "http://localhost:5000"
+).replace(/\/$/, "");
 
 const AUTH_URL = `${API_BASE_URL}/api/auth`;
 
@@ -19,54 +21,61 @@ const parseJsonSafely = async (response) => {
   }
 };
 
-export const registerUser = async (userData) => {
-  const response = await fetch(`${AUTH_URL}/register`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userData),
-  });
+const handleRequest = async (url, options = {}, fallbackMessage) => {
+  try {
+    const response = await fetch(url, options);
+    const data = await parseJsonSafely(response);
 
-  const data = await parseJsonSafely(response);
+    if (!response.ok) {
+      throw new Error(data?.message || fallbackMessage);
+    }
 
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to register.");
+    return data;
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your connection.");
+    }
+
+    throw error;
   }
+};
 
-  return data;
+export const registerUser = async (userData) => {
+  return handleRequest(
+    `${AUTH_URL}/register`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    },
+    "Failed to register.",
+  );
 };
 
 export const loginUser = async (credentials) => {
-  const response = await fetch(`${AUTH_URL}/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return handleRequest(
+    `${AUTH_URL}/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
     },
-    body: JSON.stringify(credentials),
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to login.");
-  }
-
-  return data;
+    "Failed to login.",
+  );
 };
 
 export const getCurrentUser = async (token) => {
-  const response = await fetch(`${AUTH_URL}/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  return handleRequest(
+    `${AUTH_URL}/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to fetch user.");
-  }
-
-  return data;
+    "Failed to fetch user.",
+  );
 };

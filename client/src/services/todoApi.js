@@ -1,4 +1,6 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL || "http://localhost:5000"
+).replace(/\/$/, "");
 
 const API_URL = `${API_BASE_URL}/api/todos`;
 
@@ -19,125 +21,119 @@ const parseJsonSafely = async (response) => {
   }
 };
 
-const getAuthHeaders = () => {
-  const token = localStorage.getItem("token");
+const getToken = () => localStorage.getItem("token");
+
+const getAuthHeaders = (includeJson = true) => {
+  const token = getToken();
 
   return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
+    ...(includeJson ? { "Content-Type": "application/json" } : {}),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 };
 
-export const getTodos = async () => {
-  const response = await fetch(API_URL, {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
+const handleRequest = async (
+  url,
+  options = {},
+  fallbackMessage,
+  fallbackData = null,
+) => {
+  try {
+    const response = await fetch(url, options);
+    const data = await parseJsonSafely(response);
 
-  const data = await parseJsonSafely(response);
+    if (!response.ok) {
+      throw new Error(data?.message || fallbackMessage);
+    }
 
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to fetch todos.");
+    return data ?? fallbackData;
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Network error. Please check your connection.");
+    }
+
+    throw error;
   }
+};
 
-  return data ?? [];
+export const getTodos = async () => {
+  return handleRequest(
+    API_URL,
+    {
+      headers: getAuthHeaders(false),
+    },
+    "Failed to fetch todos.",
+    [],
+  );
 };
 
 export const createTodo = async (todoData) => {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: getAuthHeaders(),
-    body: JSON.stringify(todoData),
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to create todo.");
-  }
-
-  return data;
+  return handleRequest(
+    API_URL,
+    {
+      method: "POST",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(todoData),
+    },
+    "Failed to create todo.",
+  );
 };
 
 export const updateTodo = async (id, updatedFields) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: getAuthHeaders(),
-    body: JSON.stringify(updatedFields),
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to update todo.");
-  }
-
-  return data;
+  return handleRequest(
+    `${API_URL}/${id}`,
+    {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      body: JSON.stringify(updatedFields),
+    },
+    "Failed to update todo.",
+  );
 };
 
 export const reorderTodos = async (orderedIds) => {
-  const response = await fetch(`${API_URL}/reorder`, {
-    method: "PUT",
-    headers: getAuthHeaders(),
-    body: JSON.stringify({ orderedIds }),
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to reorder todos.");
-  }
-
-  return data;
+  return handleRequest(
+    `${API_URL}/reorder`,
+    {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ orderedIds }),
+    },
+    "Failed to reorder todos.",
+  );
 };
 
 export const setAllTodosCompleted = async (completed) => {
-  const response = await fetch(`${API_URL}/set-all-completed`, {
-    method: "PUT",
-    headers: getAuthHeaders(),
-    body: JSON.stringify({ completed }),
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to update all todos.");
-  }
-
-  return data ?? [];
+  return handleRequest(
+    `${API_URL}/set-all-completed`,
+    {
+      method: "PUT",
+      headers: getAuthHeaders(),
+      body: JSON.stringify({ completed }),
+    },
+    "Failed to update all todos.",
+    [],
+  );
 };
 
 export const removeTodo = async (id) => {
-  const response = await fetch(`${API_URL}/${id}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+  return handleRequest(
+    `${API_URL}/${id}`,
+    {
+      method: "DELETE",
+      headers: getAuthHeaders(false),
     },
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to delete todo.");
-  }
-
-  return data;
+    "Failed to delete todo.",
+  );
 };
 
 export const clearCompleted = async () => {
-  const response = await fetch(API_URL, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+  return handleRequest(
+    API_URL,
+    {
+      method: "DELETE",
+      headers: getAuthHeaders(false),
     },
-  });
-
-  const data = await parseJsonSafely(response);
-
-  if (!response.ok) {
-    throw new Error(data?.message || "Failed to clear completed todos.");
-  }
-
-  return data;
+    "Failed to clear completed todos.",
+  );
 };

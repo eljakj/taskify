@@ -159,7 +159,7 @@ export default function TodoItem({
       <div className="flex min-w-0 flex-1 items-start gap-3">
         <button
           type="button"
-          className="mt-0.5 cursor-grab text-zinc-400 active:cursor-grabbing dark:text-slate-500"
+          className="mt-1 cursor-grab text-zinc-400 active:cursor-grabbing dark:text-slate-500"
           aria-label="Drag task"
           title="Drag task"
         >
@@ -170,7 +170,7 @@ export default function TodoItem({
           type="button"
           onClick={() => toggleTodo(todo.id)}
           disabled={isSaving}
-          className={`mt-0.5 flex h-6 w-6 shrink-0 cursor-pointer select-none items-center justify-center rounded-full border transition-all duration-200 hover:scale-105 disabled:cursor-not-allowed disabled:opacity-60 ${
+          className={`mt-0.5 flex h-7 w-7 shrink-0 cursor-pointer items-center justify-center rounded-full border transition-all duration-200 hover:scale-105 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60 ${
             todo.completed
               ? "border-indigo-600 bg-indigo-600 text-white"
               : "border-zinc-300 bg-white hover:border-indigo-400 hover:bg-indigo-50 dark:border-slate-600 dark:bg-slate-900 dark:hover:border-indigo-500 dark:hover:bg-slate-800"
@@ -217,7 +217,7 @@ export default function TodoItem({
                 value={editedTitle}
                 onChange={(event) => setEditedTitle(event.target.value)}
                 disabled={isSaving}
-                className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+                className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500"
               />
 
               <textarea
@@ -225,7 +225,7 @@ export default function TodoItem({
                 onChange={(event) => setEditedDescription(event.target.value)}
                 rows={4}
                 disabled={isSaving}
-                className="w-full resize-none rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+                className="w-full resize-none rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500"
               />
 
               <div className="grid gap-3 sm:grid-cols-2">
@@ -233,7 +233,7 @@ export default function TodoItem({
                   value={editedPriority}
                   onChange={(event) => setEditedPriority(event.target.value)}
                   disabled={isSaving}
-                  className="cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500 dark:focus:ring-0"
+                  className="min-h-[44px] cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-indigo-500"
                 >
                   <option value="low">Low priority</option>
                   <option value="medium">Medium priority</option>
@@ -251,7 +251,7 @@ export default function TodoItem({
                     onChange={(event) => setEditedDueDate(event.target.value)}
                     onFocus={!isSaving ? openEditedDatePicker : undefined}
                     disabled={isSaving}
-                    className="w-full cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 focus:ring-0 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500 dark:focus:ring-0"
+                    className="min-h-[44px] w-full cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 sm:rounded-2xl dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500"
                   />
                 </div>
               </div>
@@ -261,7 +261,7 @@ export default function TodoItem({
                   type="button"
                   onClick={handleSave}
                   disabled={isSaving}
-                  className="w-full cursor-pointer rounded-xl bg-indigo-600 px-3 py-2 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto dark:bg-indigo-600"
+                  className="w-full cursor-pointer rounded-xl bg-indigo-600 px-3 py-2.5 text-sm font-medium text-white transition hover:opacity-90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto dark:bg-indigo-600"
                 >
                   {isSaving ? "Saving..." : "Save"}
                 </button>
@@ -269,7 +269,7 @@ export default function TodoItem({
                   type="button"
                   onClick={handleCancel}
                   disabled={isSaving}
-                  className="w-full cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+                  className="w-full cursor-pointer rounded-xl border border-zinc-200 px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-zinc-100 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
                 >
                   Cancel
                 </button>
@@ -322,12 +322,12 @@ export default function TodoItem({
       </div>
 
       {!isEditing && (
-        <div className="flex flex-wrap gap-2 sm:ml-4 sm:justify-end">
+        <div className="flex w-full flex-wrap gap-2 sm:ml-4 sm:w-auto sm:justify-end">
           <button
             type="button"
             onClick={() => setIsEditing(true)}
             disabled={isSaving}
-            className="min-h-[42px] cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            className="min-h-[42px] flex-1 cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-sm text-zinc-700 transition hover:bg-zinc-100 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             Edit
           </button>
@@ -335,7 +335,7 @@ export default function TodoItem({
             type="button"
             onClick={() => requestDeleteTodo(todo)}
             disabled={isSaving}
-            className="min-h-[42px] cursor-pointer rounded-xl border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-red-500/20 dark:text-red-300 dark:hover:bg-red-500/10"
+            className="min-h-[42px] flex-1 cursor-pointer rounded-xl border border-red-200 px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none dark:border-red-500/20 dark:text-red-300 dark:hover:bg-red-500/10"
           >
             Delete
           </button>

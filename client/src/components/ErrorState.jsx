@@ -5,14 +5,14 @@ export default function ErrorState({
   isRetrying = false,
 }) {
   return (
-    <div className="rounded-3xl border border-red-200 bg-red-50/80 p-6 shadow-sm backdrop-blur dark:border-red-500/20 dark:bg-red-500/10">
+    <div className="rounded-[1.5rem] border border-red-200 bg-red-50/80 p-4 shadow-sm backdrop-blur sm:rounded-3xl sm:p-6 dark:border-red-500/20 dark:bg-red-500/10">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-xl text-red-600 dark:bg-red-500/10 dark:text-red-300">
+        <div className="min-w-0 flex-1">
+          <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-red-100 text-base text-red-600 sm:h-12 sm:w-12 sm:rounded-2xl sm:text-xl dark:bg-red-500/10 dark:text-red-300">
             !
           </div>
 
-          <h3 className="text-lg font-bold text-red-700 dark:text-red-300">
+          <h3 className="text-base font-bold text-red-700 sm:text-lg dark:text-red-300">
             {title}
           </h3>
 
@@ -25,7 +25,7 @@ export default function ErrorState({
           type="button"
           onClick={onRetry}
           disabled={isRetrying}
-          className="cursor-pointer rounded-2xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 dark:bg-red-600"
+          className="w-full cursor-pointer rounded-xl bg-red-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto sm:rounded-2xl dark:bg-red-600"
         >
           {isRetrying ? "Retrying..." : "Retry"}
         </button>

@@ -3,12 +3,12 @@ import TodoItem from "./TodoItem";
 
 function EmptyState({ title, message, emoji = "📝" }) {
   return (
-    <div className="rounded-3xl border border-dashed border-zinc-300 bg-white/50 p-8 text-center backdrop-blur dark:border-slate-700 dark:bg-slate-900/50">
-      <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-100 text-2xl dark:bg-slate-800">
+    <div className="rounded-2xl border border-dashed border-zinc-300 bg-white/50 p-6 text-center backdrop-blur sm:rounded-3xl sm:p-8 dark:border-slate-700 dark:bg-slate-900/50">
+      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-2xl sm:h-14 sm:w-14 dark:bg-slate-800">
         {emoji}
       </div>
 
-      <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100">
+      <h3 className="text-base font-semibold text-zinc-800 sm:text-lg dark:text-zinc-100">
         {title}
       </h3>
 
@@ -125,7 +125,7 @@ export default function TodoList({
               <button
                 type="button"
                 onClick={requestClearCompleted}
-                className="cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-xs font-semibold transition hover:bg-zinc-100 dark:border-slate-700 dark:hover:bg-slate-800"
+                className="min-h-[42px] cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-xs font-semibold transition hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
               >
                 Clear completed
               </button>
@@ -187,7 +187,7 @@ export default function TodoList({
             <button
               type="button"
               onClick={requestClearCompleted}
-              className="cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-xs font-semibold transition hover:bg-zinc-100 dark:border-slate-700 dark:hover:bg-slate-800"
+              className="min-h-[42px] cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-xs font-semibold transition hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
             >
               Clear completed
             </button>

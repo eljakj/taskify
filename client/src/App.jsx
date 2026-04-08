@@ -549,7 +549,7 @@ export default function App() {
 
   if (isAuthChecking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 text-zinc-900 dark:bg-neutral-950 dark:text-white">
+      <div className="flex min-h-[100dvh] items-center justify-center bg-gray-100 text-zinc-900 dark:bg-neutral-950 dark:text-white">
         Checking authentication...
       </div>
     );
@@ -570,7 +570,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.10),_transparent_35%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)] text-zinc-900 transition-colors duration-300 dark:bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.22),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_100%)] dark:text-white">
+    <div className="min-h-[100dvh] bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.10),_transparent_35%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)] text-zinc-900 transition-colors duration-300 dark:bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.22),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_100%)] dark:text-white">
       <ConfirmModal
         isOpen={confirmState.isOpen}
         title={confirmState.title}
@@ -583,7 +583,7 @@ export default function App() {
         isLoading={isConfirmLoading}
       />
 
-      <div className="mx-auto max-w-5xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
+      <div className="mx-auto max-w-5xl px-3 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8 lg:px-8">
         <Header
           theme={theme}
           toggleTheme={toggleTheme}
