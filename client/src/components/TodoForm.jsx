@@ -135,7 +135,7 @@ export default function TodoForm({ addTodo, isAdding }) {
               onChange={(e) => setDueDate(e.target.value)}
               onFocus={!isAdding ? openDatePicker : undefined}
               disabled={isAdding}
-              className="min-h-[44px] w-full cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 sm:rounded-2xl sm:px-4 sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500"
+              className="min-h-[44px] w-auto cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-800 outline-none transition [color-scheme:light] focus:border-indigo-600 sm:rounded-2xl sm:px-4 sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:[color-scheme:dark] dark:focus:border-indigo-500"
             />
           </div>
         </div>
