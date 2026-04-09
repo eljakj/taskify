@@ -120,10 +120,10 @@ export default function Header({
   isLoggingOut,
 }) {
   return (
-    <header className="mb-5 flex items-center justify-between gap-3 sm:mb-6">
+    <header className="mb-4 flex items-center justify-between gap-2 sm:mb-5">
       <div className="flex min-w-0 items-center gap-3">
         <LogoMark />
-        <h1 className="truncate text-lg font-black tracking-tight text-zinc-950 sm:text-2xl dark:text-white">
+        <h1 className="truncate text-xl font-black tracking-tight text-zinc-950 sm:text-2xl dark:text-white">
           Taskify
         </h1>
       </div>

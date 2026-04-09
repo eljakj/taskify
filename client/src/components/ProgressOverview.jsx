@@ -7,14 +7,14 @@ export default function ProgressOverview({
   const progress = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   return (
-    <div className="mb-6 rounded-[1.5rem] border border-zinc-200 bg-white/80 p-4 shadow-sm backdrop-blur sm:rounded-[2rem] sm:p-5 dark:border-slate-700 dark:bg-slate-900/70">
+    <div className="mb-5 rounded-[1.5rem] border border-zinc-200 bg-white/80 p-4 shadow-sm backdrop-blur sm:mb-6 sm:rounded-[1.75rem] sm:p-5 dark:border-slate-700 dark:bg-slate-900/70">
       <div className="grid gap-3 sm:gap-4 lg:grid-cols-[1fr_auto] lg:items-center lg:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 dark:text-slate-400">
             Progress
           </p>
 
-          <h2 className="mt-2 text-xl font-black tracking-tight text-zinc-900 sm:text-2xl dark:text-white">
+          <h2 className="mt-2 text-lg font-black tracking-tight text-zinc-900 sm:text-2xl dark:text-white">
             {completed} of {total} tasks completed
           </h2>
 

@@ -15,6 +15,11 @@
 html {
   height: 100%;
   -webkit-text-size-adjust: 100%;
+  background-color: #f8fafc;
+}
+
+html.dark {
+  background-color: #020617;
 }
 
 body,
@@ -24,9 +29,14 @@ body,
 
 body {
   margin: 0;
-  @apply bg-white text-zinc-900 antialiased transition-colors duration-300;
+  @apply antialiased text-zinc-900 transition-colors duration-300;
+  @apply bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.10),_transparent_35%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)];
   overflow-x: hidden;
   -webkit-tap-highlight-color: transparent;
+}
+
+.dark body {
+  @apply text-white bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.22),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_100%)];
 }
 
 button,

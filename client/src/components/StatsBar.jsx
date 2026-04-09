@@ -27,7 +27,7 @@ export default function StatsBar({ total, active, completed, overdue }) {
   ];
 
   return (
-    <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="mb-5 grid grid-cols-2 gap-2.5 sm:mb-6 sm:gap-3 lg:grid-cols-4">
       {cards.map((card) => (
         <div
           key={card.label}
@@ -37,7 +37,7 @@ export default function StatsBar({ total, active, completed, overdue }) {
             {card.label}
           </p>
 
-          <p className="mt-2 text-2xl font-black tracking-tight sm:mt-3 sm:text-3xl">
+          <p className="mt-2 text-xl font-black tracking-tight sm:mt-3 sm:text-3xl">
             {card.value}
           </p>
         </div>

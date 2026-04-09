@@ -570,7 +570,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.10),_transparent_35%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)] text-zinc-900 transition-colors duration-300 dark:bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.22),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_100%)] dark:text-white">
+    <div className="min-h-[100dvh] text-zinc-900 transition-colors duration-300 dark:text-white">
       <ConfirmModal
         isOpen={confirmState.isOpen}
         title={confirmState.title}
@@ -583,7 +583,7 @@ export default function App() {
         isLoading={isConfirmLoading}
       />
 
-      <div className="mx-auto max-w-5xl px-3 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-6 sm:py-8 lg:px-8">
+      <div className="mx-auto max-w-4xl px-3 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-5 sm:py-6 lg:px-6">
         <Header
           theme={theme}
           toggleTheme={toggleTheme}
@@ -606,7 +606,7 @@ export default function App() {
           overdue={overdueCount}
         />
 
-        <section className="rounded-[1.5rem] border border-white/60 bg-white/75 p-3 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur-xl transition-colors duration-300 sm:rounded-[2rem] sm:p-6 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+        <section className="rounded-[1.25rem] border border-white/60 bg-white/75 p-3 shadow-[0_16px_50px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors duration-300 sm:rounded-[1.75rem] sm:p-5 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
           <TodoForm addTodo={addTodo} isAdding={isAddingTodo} />
 
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
