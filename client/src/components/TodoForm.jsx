@@ -6,24 +6,6 @@ const priorities = [
   { value: "high", label: "High" },
 ];
 
-function SelectIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className="h-4 w-4 text-zinc-400 dark:text-slate-500"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M7 10L12 15L17 10"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function getLocalDate() {
   return new Date().toLocaleDateString("en-CA");
@@ -100,7 +82,7 @@ export default function TodoForm({ addTodo, isAdding }) {
               value={priority}
               onChange={(event) => setPriority(event.target.value)}
               disabled={isAdding}
-              className="min-h-[44px] w-full cursor-pointer appearance-none rounded-xl border border-zinc-200 bg-white px-4 py-3 pr-10 text-sm font-medium text-zinc-700 shadow-sm outline-none transition focus:border-indigo-600 sm:rounded-2xl sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-indigo-500"
+              className="min-h-[44px] w-full cursor-pointer  rounded-xl border border-zinc-200 bg-white px-4 py-3 pr-10 text-sm font-medium text-zinc-700 shadow-sm outline-none transition focus:border-indigo-600 sm:rounded-2xl sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-indigo-500"
             >
               {priorities.map((item) => (
                 <option key={item.value} value={item.value}>
@@ -109,9 +91,7 @@ export default function TodoForm({ addTodo, isAdding }) {
               ))}
             </select>
 
-            <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
-              <SelectIcon />
-            </span>
+          
           </div>
         </div>
 
