@@ -35,7 +35,7 @@ body {
 }
 
 .dark body {
-  @apply text-white bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.22),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_100%)];
+  @apply text-white bg-[radial-gradient(circle_at_top,rgba(79,70,229,0.22),transparent_30%),linear-gradient(180deg,#020617_0%,#0f172a_100%)];
 }
 
 button,
