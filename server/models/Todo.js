@@ -6,6 +6,7 @@ const todoSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
+      index: true,
     },
     title: {
       type: String,
@@ -27,22 +28,23 @@ const todoSchema = new mongoose.Schema(
       default: "medium",
     },
     dueDate: {
-      type: String,
-      default: "",
+      type: Date,
+      default: null,
     },
     order: {
       type: Number,
       default: 0,
     },
-    createdAt: {
-      type: String,
-      default: () => new Date().toISOString(),
-    },
   },
   {
     versionKey: false,
+    timestamps: { createdAt: true, updatedAt: false },
   },
 );
+
+todoSchema.index({ user: 1, order: 1 });
+todoSchema.index({ user: 1, createdAt: -1 });
+todoSchema.index({ user: 1, completed: 1 });
 
 const Todo = mongoose.model("Todo", todoSchema);
 

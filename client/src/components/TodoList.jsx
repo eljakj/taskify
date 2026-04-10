@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import TodoItem from "./TodoItem";
+import TodoItem from "@/components/TodoItem";
 
 function EmptyState({ title, message, emoji = "📝" }) {
   return (
-    <div className="rounded-2xl border border-dashed border-zinc-300 bg-white/50 p-6 text-center backdrop-blur sm:rounded-3xl sm:p-8 dark:border-slate-700 dark:bg-slate-900/50">
-      <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-2xl sm:h-14 sm:w-14 dark:bg-slate-800">
+    <div className="rounded-xl border border-dashed border-zinc-300 p-5 text-center bg-white sm:rounded-2xl sm:p-6 dark:border-slate-700 dark:bg-slate-900/50">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-xl sm:h-12 sm:w-12 dark:bg-slate-800">
         {emoji}
       </div>
 
-      <h3 className="text-base font-semibold text-zinc-800 sm:text-lg dark:text-zinc-100">
+      <h3 className="text-card-title text-zinc-800 dark:text-zinc-100">
         {title}
       </h3>
 
-      <p className="mt-2 text-sm text-zinc-500 dark:text-slate-400">
-        {message}
-      </p>
+      <p className="mt-1.5 text-muted">{message}</p>
     </div>
   );
 }
@@ -116,16 +114,17 @@ export default function TodoList({
           emoji={emptyEmoji}
         />
 
-        <div className="mt-6 flex flex-col gap-3 border-t border-zinc-200 pt-4 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
+        <div className="mt-5 flex flex-col gap-2.5 border-t border-zinc-200 pt-3 text-muted sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
           <span>{allTodos.length} tasks total</span>
 
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2.5">
             <span>{completedCount} completed</span>
+
             {completedCount > 0 && (
               <button
                 type="button"
                 onClick={requestClearCompleted}
-                className="min-h-[42px] cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-xs font-semibold transition hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
+                className="min-h-10 cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-muted font-semibold hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
               >
                 Clear completed
               </button>
@@ -138,7 +137,7 @@ export default function TodoList({
 
   return (
     <>
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {todos.map((todo, index) => {
           const isVisible = visibleIds.includes(todo.id);
           const isRemoving =
@@ -177,17 +176,17 @@ export default function TodoList({
         })}
       </div>
 
-      <div className="mt-6 flex flex-col gap-3 border-t border-zinc-200 pt-4 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800 dark:text-slate-400">
+      <div className="mt-5 flex flex-col gap-2.5 border-t border-zinc-200 pt-3 text-muted sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
         <span>{allTodos.length} tasks total</span>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5">
           <span>{completedCount} completed</span>
 
           {completedCount > 0 && (
             <button
               type="button"
               onClick={requestClearCompleted}
-              className="min-h-[42px] cursor-pointer rounded-xl border border-zinc-200 px-3 py-2 text-xs font-semibold transition hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
+              className="min-h-10 cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-muted font-semibold hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
             >
               Clear completed
             </button>

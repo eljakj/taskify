@@ -27,6 +27,7 @@ const handleRequest = async (url, options = {}, fallbackMessage) => {
     const data = await parseJsonSafely(response);
 
     if (!response.ok) {
+      console.error("Auth API Error:", data);
       throw new Error(data?.message || fallbackMessage);
     }
 

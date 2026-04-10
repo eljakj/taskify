@@ -43,6 +43,7 @@ const handleRequest = async (
     const data = await parseJsonSafely(response);
 
     if (!response.ok) {
+      console.error("Todo API Error:", data);
       throw new Error(data?.message || fallbackMessage);
     }
 

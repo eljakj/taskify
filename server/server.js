@@ -30,6 +30,9 @@ const sortTodosByOrder = (todos) => {
   return [...todos].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 };
 
+const validPriorities = new Set(["low", "medium", "high"]);
+const dueDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+
 const formatTodo = (todo) => ({
   id: todo._id.toString(),
   title: todo.title,
@@ -42,6 +45,84 @@ const formatTodo = (todo) => ({
 });
 
 const formatTodos = (todos) => todos.map(formatTodo);
+
+const sanitizeTodoPayload = (payload, { requireTitle = false } = {}) => {
+  const updates = {};
+
+  if ("title" in payload || requireTitle) {
+    const title = payload.title?.trim();
+
+    if (!title) {
+      return { error: "Title is required." };
+    }
+
+    updates.title = title;
+  }
+
+  if ("description" in payload) {
+    updates.description = payload.description?.trim() || "";
+  }
+
+  if ("priority" in payload) {
+    const priority = payload.priority || "medium";
+
+    if (!validPriorities.has(priority)) {
+      return { error: "Priority must be low, medium, or high." };
+    }
+
+    updates.priority = priority;
+  }
+
+  if ("dueDate" in payload) {
+    const dueDate = payload.dueDate || "";
+
+    if (dueDate && !dueDatePattern.test(dueDate)) {
+      return { error: "Due date must use YYYY-MM-DD format." };
+    }
+
+    updates.dueDate = dueDate;
+  }
+
+  if ("completed" in payload) {
+    if (typeof payload.completed !== "boolean") {
+      return { error: "completed must be a boolean." };
+    }
+
+    updates.completed = payload.completed;
+  }
+
+  return { updates };
+};
+
+const ensureValidTodoId = (id, res) => {
+  if (!mongoose.isValidObjectId(id)) {
+    res.status(400).json({ message: "Invalid todo id." });
+    return false;
+  }
+
+  return true;
+};
+
+const reindexTodosForUser = async (userId) => {
+  const remainingTodos = await Todo.find({ user: userId })
+    .sort({ order: 1, createdAt: 1 })
+    .lean();
+
+  if (remainingTodos.length === 0) {
+    return [];
+  }
+
+  await Todo.bulkWrite(
+    remainingTodos.map((todo, index) => ({
+      updateOne: {
+        filter: { _id: todo._id, user: userId },
+        update: { order: index },
+      },
+    })),
+  );
+
+  return Todo.find({ user: userId }).sort({ order: 1 }).lean();
+};
 
 const createToken = (user) =>
   jwt.sign(
@@ -179,28 +260,22 @@ app.get("/api/todos", authMiddleware, async (req, res) => {
 
 app.post("/api/todos", authMiddleware, async (req, res) => {
   try {
-    const {
-      title,
-      description = "",
-      priority = "medium",
-      dueDate = "",
-    } = req.body;
+    const { updates, error } = sanitizeTodoPayload(req.body, {
+      requireTitle: true,
+    });
 
-    if (!title || !title.trim()) {
-      return res.status(400).json({ message: "Title is required." });
+    if (error) {
+      return res.status(400).json({ message: error });
     }
 
     const todos = await Todo.find({ user: req.user.id }).lean();
 
     const newTodo = await Todo.create({
       user: req.user.id,
-      title: title.trim(),
-      description: description.trim(),
       completed: false,
-      priority,
-      dueDate,
       order: todos.length,
       createdAt: new Date().toISOString(),
+      ...updates,
     });
 
     res.status(201).json(formatTodo(newTodo));
@@ -219,18 +294,35 @@ app.put("/api/todos/reorder", authMiddleware, async (req, res) => {
 
     const todos = await Todo.find({ user: req.user.id }).lean();
 
-    if (orderedIds.length !== todos.length) {
+    if (
+      orderedIds.length !== todos.length ||
+      new Set(orderedIds).size !== orderedIds.length
+    ) {
       return res
         .status(400)
         .json({ message: "orderedIds do not match existing todos." });
     }
 
-    for (let i = 0; i < orderedIds.length; i += 1) {
-      await Todo.findOneAndUpdate(
-        { _id: orderedIds[i], user: req.user.id },
-        { order: i },
-      );
+    if (!orderedIds.every((id) => mongoose.isValidObjectId(id))) {
+      return res.status(400).json({ message: "orderedIds contain invalid ids." });
     }
+
+    const todoIdSet = new Set(todos.map((todo) => todo._id.toString()));
+
+    if (!orderedIds.every((id) => todoIdSet.has(id))) {
+      return res
+        .status(400)
+        .json({ message: "orderedIds do not match existing todos." });
+    }
+
+    await Todo.bulkWrite(
+      orderedIds.map((id, index) => ({
+        updateOne: {
+          filter: { _id: id, user: req.user.id },
+          update: { order: index },
+        },
+      })),
+    );
 
     const updatedTodos = await Todo.find({ user: req.user.id }).lean();
     res.json(formatTodos(sortTodosByOrder(updatedTodos)));
@@ -259,7 +351,16 @@ app.put("/api/todos/set-all-completed", authMiddleware, async (req, res) => {
 app.put("/api/todos/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
+
+    if (!ensureValidTodoId(id, res)) {
+      return;
+    }
+
+    const { updates, error } = sanitizeTodoPayload(req.body);
+
+    if (error) {
+      return res.status(400).json({ message: error });
+    }
 
     const existingTodo = await Todo.findOne({ _id: id, user: req.user.id });
 
@@ -286,6 +387,10 @@ app.delete("/api/todos/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!ensureValidTodoId(id, res)) {
+      return;
+    }
+
     const deletedTodo = await Todo.findOneAndDelete({
       _id: id,
       user: req.user.id,
@@ -295,13 +400,7 @@ app.delete("/api/todos/:id", authMiddleware, async (req, res) => {
       return res.status(404).json({ message: "Todo not found." });
     }
 
-    const remainingTodos = await Todo.find({ user: req.user.id }).sort({
-      order: 1,
-    });
-
-    for (let i = 0; i < remainingTodos.length; i += 1) {
-      await Todo.findByIdAndUpdate(remainingTodos[i]._id, { order: i });
-    }
+    await reindexTodosForUser(req.user.id);
 
     res.json({ message: "Todo deleted successfully." });
   } catch {
@@ -313,13 +412,7 @@ app.delete("/api/todos", authMiddleware, async (req, res) => {
   try {
     await Todo.deleteMany({ user: req.user.id, completed: true });
 
-    const remainingTodos = await Todo.find({ user: req.user.id }).sort({
-      order: 1,
-    });
-
-    for (let i = 0; i < remainingTodos.length; i += 1) {
-      await Todo.findByIdAndUpdate(remainingTodos[i]._id, { order: i });
-    }
+    await reindexTodosForUser(req.user.id);
 
     res.json({ message: "Completed todos cleared successfully." });
   } catch {

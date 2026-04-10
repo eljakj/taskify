@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import CustomSelect from "@/components/CustomSelect";
 
 const priorities = [
   { value: "low", label: "Low" },
@@ -6,9 +7,58 @@ const priorities = [
   { value: "high", label: "High" },
 ];
 
+function CalendarIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className="h-4 w-4"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8 3V5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16 3V5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M4 9H20"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <rect
+        x="4"
+        y="5"
+        width="16"
+        height="15"
+        rx="3"
+        stroke="currentColor"
+        strokeWidth="1.8"
+      />
+    </svg>
+  );
+}
 
 function getLocalDate() {
-  return new Date().toLocaleDateString("en-CA");
+  return new Date().toISOString().slice(0, 10);
+}
+
+function formatDisplayDate(dateString) {
+  if (!dateString) return "";
+  const date = new Date(`${dateString}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString(undefined, {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
 }
 
 export default function TodoForm({ addTodo, isAdding }) {
@@ -19,6 +69,7 @@ export default function TodoForm({ addTodo, isAdding }) {
   const dueDateRef = useRef(null);
 
   const openDatePicker = () => {
+    if (isAdding) return;
     if (dueDateRef.current?.showPicker) {
       dueDateRef.current.showPicker();
     } else {
@@ -28,7 +79,6 @@ export default function TodoForm({ addTodo, isAdding }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (isAdding) return;
 
     const trimmedTitle = title.trim();
@@ -52,66 +102,70 @@ export default function TodoForm({ addTodo, isAdding }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 space-y-4">
+    <form onSubmit={handleSubmit} className="mb-5 space-y-3">
       <input
         type="text"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a new task..."
         disabled={isAdding}
-        className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-sm text-zinc-800 shadow-sm outline-none transition focus:border-indigo-600 sm:rounded-2xl sm:px-5 sm:py-4 sm:text-base dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-500"
+        className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
       />
 
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Add description..."
-        rows={4}
+        rows={10}
         disabled={isAdding}
-        className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-sm text-zinc-800 shadow-sm outline-none transition focus:border-indigo-600 sm:rounded-2xl sm:px-5 sm:py-4 sm:text-base dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:focus:border-indigo-500"
+        className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white "
       />
 
-      <div className="grid gap-3 sm:gap-4 lg:grid-cols-2">
-        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-sm sm:rounded-2xl sm:p-4 dark:border-slate-700 dark:bg-slate-900/90">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-slate-400">
+      <div className="grid gap-2.5 sm:grid-cols-2">
+        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-md dark:border-slate-700 dark:bg-slate-900/80">
+          <p className="mb-2 text-muted font-semibold uppercase">
             Priority
           </p>
 
-          <div className="relative">
-            <select
-              value={priority}
-              onChange={(event) => setPriority(event.target.value)}
-              disabled={isAdding}
-              className="min-h-[44px] w-full cursor-pointer  rounded-xl border border-zinc-200 bg-white px-4 py-3 pr-10 text-sm font-medium text-zinc-700 shadow-sm outline-none transition focus:border-indigo-600 sm:rounded-2xl sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-indigo-500"
-            >
-              {priorities.map((item) => (
-                <option key={item.value} value={item.value}>
-                  {item.label}
-                </option>
-              ))}
-            </select>
-
-          
-          </div>
+          <CustomSelect
+            value={priority}
+            onChange={setPriority}
+            options={priorities}
+            disabled={isAdding}
+            placeholder="Select priority"
+          />
         </div>
 
-        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-sm sm:rounded-2xl sm:p-4 dark:border-slate-700 dark:bg-slate-900/90">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-zinc-500 dark:text-slate-400">
+        <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 shadow-md dark:border-slate-700 dark:bg-slate-900/80">
+          <p className="mb-2 text-muted font-semibold uppercase">
             Due date
           </p>
 
-          <div
-            className="relative flex items-center overflow-hidden"
-            onClick={!isAdding ? openDatePicker : undefined}
-          >
+          <div className="relative">
+            <button
+              type="button"
+              onClick={openDatePicker}
+              disabled={isAdding}
+              className="grid min-h-11 w-full cursor-pointer grid-cols-[1fr_auto] items-center rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-left text-body text-zinc-700  outline-none hover:border-indigo-500 focus:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100"
+            >
+              <span className={`truncate  ${dueDate ? "" : "text-muted"}`}>
+                {dueDate ? formatDisplayDate(dueDate) : "Select date"}
+              </span>
+
+              <span className="ml-2 text-zinc-400 dark:text-slate-500">
+                <CalendarIcon />
+              </span>
+            </button>
+
             <input
               ref={dueDateRef}
               type="date"
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
-              onFocus={!isAdding ? openDatePicker : undefined}
               disabled={isAdding}
-              className="h-[44px] w-full cursor-pointer rounded-xl border border-zinc-200 bg-white px-3 text-sm text-zinc-800 outline-none transition focus:border-indigo-600 sm:h-[48px] sm:rounded-2xl sm:px-4 sm:text-base dark:border-slate-700 dark:bg-slate-800 dark:text-white dark:focus:border-indigo-500 [color-scheme:light] dark:[color-scheme:dark]"
+              className="pointer-events-none absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
+              tabIndex={-1}
+              aria-hidden="true"
             />
           </div>
         </div>
@@ -120,7 +174,7 @@ export default function TodoForm({ addTodo, isAdding }) {
       <button
         type="submit"
         disabled={isAdding}
-        className="w-full cursor-pointer rounded-xl bg-indigo-600 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70 sm:rounded-2xl sm:py-4 sm:text-base dark:bg-indigo-600"
+        className="w-full cursor-pointer rounded-xl bg-indigo-600 py-2.5 text-body font-semibold text-white hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isAdding ? "Adding..." : "Add task"}
       </button>

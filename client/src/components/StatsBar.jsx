@@ -4,40 +4,41 @@ export default function StatsBar({ total, active, completed, overdue }) {
       label: "Total",
       value: total,
       className:
-        "border-zinc-200 bg-white/80 text-zinc-900 dark:border-slate-700 dark:bg-slate-900/70 dark:text-white",
+        "border-indigo-200 bg-indigo-200 text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/20 dark:text-indigo-300",
+      
     },
     {
       label: "Active",
       value: active,
-      className:
-        "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-500/20 dark:bg-sky-500/10 dark:text-sky-300",
+      className: "border-sky-200 bg-sky-200 text-sky-700 dark:border-sky-500/20 dark:bg-sky-500/20 dark:text-sky-300",
+      
     },
     {
       label: "Completed",
       value: completed,
-      className:
-        "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300",
+      className: "border-emerald-200 bg-emerald-200 text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/20 dark:text-emerald-300",
+    
     },
     {
       label: "Overdue",
       value: overdue,
-      className:
-        "border-red-200 bg-red-50 text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300",
+      className: "border-red-200 bg-red-200 text-red-700 dark:border-red-500/20 dark:bg-red-500/20 dark:text-red-300",
+
     },
   ];
 
   return (
-    <div className="mb-5 grid grid-cols-2 gap-2.5 sm:mb-6 sm:gap-3 lg:grid-cols-4">
+    <div className="mb-4 grid grid-cols-2 gap-2 sm:mb-5 sm:gap-2.5 lg:grid-cols-4">
       {cards.map((card) => (
         <div
           key={card.label}
-          className={`rounded-2xl border p-3 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98] sm:rounded-3xl sm:p-4 ${card.className}`}
+          className={`rounded-xl border p-2.5 shadow-md hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98] sm:rounded-2xl sm:p-3 ${card.className}`}
         >
-          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] opacity-70 sm:text-xs">
+          <p className="text-[10px] font-semibold uppercase sm:text-[11px]">
             {card.label}
           </p>
 
-          <p className="mt-2 text-xl font-black tracking-tight sm:mt-3 sm:text-3xl">
+          <p className="mt-1.5 text-lg font-black sm:mt-2 sm:text-xl">
             {card.value}
           </p>
         </div>

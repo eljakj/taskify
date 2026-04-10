@@ -1,19 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
-import Header from "./components/Header";
-import StatsBar from "./components/StatsBar";
-import ProgressOverview from "./components/ProgressOverview";
-import TodoForm from "./components/TodoForm";
-import FilterBar from "./components/FilterBar";
-import TodoList from "./components/TodoList";
-import SearchBar from "./components/SearchBar";
-import ConfirmModal from "./components/ConfirmModal";
-import ToastContainer from "./components/ToastContainer";
-import TodoListSkeleton from "./components/TodoListSkeleton";
-import ErrorState from "./components/ErrorState";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import { useTheme } from "./hooks/useTheme";
-import { getCurrentUser } from "./services/authApi";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Header from "@/components/Header";
+import StatsBar from "@/components/StatsBar";
+import ProgressOverview from "@/components/ProgressOverview";
+import TodoForm from "@/components/TodoForm";
+import FilterBar from "@/components/FilterBar";
+import TodoList from "@/components/TodoList";
+import SearchBar from "@/components/SearchBar";
+import ConfirmModal from "@/components/ConfirmModal";
+import ToastContainer from "@/components/ToastContainer";
+import TodoListSkeleton from "@/components/TodoListSkeleton";
+import ErrorState from "@/components/ErrorState";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import { useTheme } from "@/hooks/useTheme";
+import { getCurrentUser } from "@/services/authApi";
 import {
   getTodos,
   createTodo,
@@ -43,14 +43,39 @@ const initialConfirmState = {
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+const getStoredUser = () => {
+  const storedUser = localStorage.getItem("user");
+
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser);
+  } catch {
+    localStorage.removeItem("user");
+    return null;
+  }
+};
+
+const normalizeDateOnly = (value) => {
+  if (!value) return "";
+
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return value;
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return date.toISOString().slice(0, 10);
+};
+
 export default function App() {
   const { theme, toggleTheme } = useTheme();
 
   const [authMode, setAuthMode] = useState("login");
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+  const [user, setUser] = useState(getStoredUser);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
 
   const [todos, setTodos] = useState([]);
@@ -69,7 +94,22 @@ export default function App() {
   const [isConfirmLoading, setIsConfirmLoading] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
-  const pushNotification = (message, type = "success") => {
+  const clearSession = useCallback(() => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    setTodos([]);
+    setErrorMessage("");
+    setConfirmState(initialConfirmState);
+    setDeletingTodoId(null);
+    setClearingCompletedIds([]);
+    setSavingTodoId(null);
+    setIsAddingTodo(false);
+    setIsConfirmLoading(false);
+    setIsLoading(false);
+  }, []);
+
+  const pushNotification = useCallback((message, type = "success") => {
     const id = `${Date.now()}-${Math.random()}`;
 
     setNotifications((prev) => [
@@ -84,28 +124,23 @@ export default function App() {
       },
       ...prev,
     ]);
-  };
+  }, []);
 
-  const dismissNotification = (id) => {
+  const dismissNotification = useCallback((id) => {
     setNotifications((prev) => prev.filter((item) => item.id !== id));
-  };
+  }, []);
 
-  const handleLogout = () => {
+  const handleLogout = useCallback(() => {
     if (isLoggingOut) return;
 
     setIsLoggingOut(true);
 
-    setTimeout(() => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      setUser(null);
-      setTodos([]);
-      setErrorMessage("");
+    window.setTimeout(() => {
+      clearSession();
       setAuthMode("login");
-      pushNotification("Logged out");
       setIsLoggingOut(false);
-    }, 600);
-  };
+    }, 350);
+  }, [clearSession, isLoggingOut]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -142,35 +177,40 @@ export default function App() {
     checkAuth();
   }, []);
 
-  const fetchTodos = async ({ retry = false } = {}) => {
-    try {
-      if (retry) {
-        setIsRetrying(true);
-      } else {
-        setIsLoading(true);
+  const fetchTodos = useCallback(
+    async ({ retry = false } = {}) => {
+      try {
+        if (retry) {
+          setIsRetrying(true);
+        } else {
+          setIsLoading(true);
+        }
+
+        setErrorMessage("");
+        const data = await getTodos();
+        setTodos(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error(error);
+
+        if (
+          error.message?.toLowerCase().includes("unauthorized") ||
+          error.message?.toLowerCase().includes("invalid token") ||
+          error.message?.toLowerCase().includes("user not found")
+        ) {
+          clearSession();
+          setAuthMode("login");
+          return;
+        }
+
+        setErrorMessage("Failed to load todos from server.");
+        pushNotification("Failed to load todos", "error");
+      } finally {
+        setIsLoading(false);
+        setIsRetrying(false);
       }
-
-      setErrorMessage("");
-      const data = await getTodos();
-      setTodos(data);
-    } catch (error) {
-      console.error(error);
-
-      if (
-        error.message?.toLowerCase().includes("unauthorized") ||
-        error.message?.toLowerCase().includes("invalid token")
-      ) {
-        handleLogout();
-        return;
-      }
-
-      setErrorMessage("Failed to load todos from server.");
-      pushNotification("Failed to load todos", "error");
-    } finally {
-      setIsLoading(false);
-      setIsRetrying(false);
-    }
-  };
+    },
+    [clearSession, pushNotification],
+  );
 
   useEffect(() => {
     if (!user) {
@@ -180,14 +220,14 @@ export default function App() {
     }
 
     fetchTodos();
-  }, [user]);
+  }, [fetchTodos, user]);
 
   const normalizedTodos = useMemo(() => {
     return todos.map((todo, index) => ({
       ...todo,
       description: todo.description || "",
       priority: todo.priority || "medium",
-      dueDate: todo.dueDate || "",
+      dueDate: normalizeDateOnly(todo.dueDate),
       order: todo.order ?? index,
       createdAt: todo.createdAt || new Date(0).toISOString(),
     }));
@@ -209,7 +249,7 @@ export default function App() {
   const overdueCount = normalizedTodos.filter((todo) => {
     if (!todo.dueDate || todo.completed) return false;
 
-    const dueDate = new Date(todo.dueDate);
+    const dueDate = new Date(`${todo.dueDate}T00:00:00`);
     dueDate.setHours(0, 0, 0, 0);
 
     return dueDate < today;
@@ -232,7 +272,7 @@ export default function App() {
           priority,
           dueDate,
         }),
-        wait(500),
+        wait(350),
       ]);
 
       if (!newTodo) {
@@ -288,7 +328,7 @@ export default function App() {
     try {
       setErrorMessage("");
       const updatedTodos = await setAllTodosCompleted(nextCompletedValue);
-      setTodos(updatedTodos);
+      setTodos(Array.isArray(updatedTodos) ? updatedTodos : []);
 
       pushNotification(
         nextCompletedValue ? "All tasks selected" : "All tasks deselected",
@@ -342,7 +382,7 @@ export default function App() {
 
       const [updatedTodo] = await Promise.all([
         updateTodo(id, updatedFields),
-        wait(500),
+        wait(350),
       ]);
 
       if (!updatedTodo) {
@@ -408,11 +448,11 @@ export default function App() {
       setConfirmState(initialConfirmState);
       setDeletingTodoId(todoId);
 
-      setTimeout(async () => {
-        await Promise.all([deleteTodo(todoId), wait(500)]);
+      window.setTimeout(async () => {
+        await Promise.all([deleteTodo(todoId), wait(350)]);
         setDeletingTodoId(null);
         setIsConfirmLoading(false);
-      }, 220);
+      }, 180);
 
       return;
     }
@@ -428,11 +468,11 @@ export default function App() {
       setConfirmState(initialConfirmState);
       setClearingCompletedIds(completedIds);
 
-      setTimeout(async () => {
-        await Promise.all([clearCompletedTodos(), wait(500)]);
+      window.setTimeout(async () => {
+        await Promise.all([clearCompletedTodos(), wait(350)]);
         setClearingCompletedIds([]);
         setIsConfirmLoading(false);
-      }, 260);
+      }, 220);
     }
   };
 
@@ -481,7 +521,7 @@ export default function App() {
 
       try {
         const freshTodos = await getTodos();
-        setTodos(freshTodos);
+        setTodos(Array.isArray(freshTodos) ? freshTodos : []);
       } catch (reloadError) {
         console.error(reloadError);
       }
@@ -540,7 +580,10 @@ export default function App() {
         if (!a.dueDate && !b.dueDate) return a.order - b.order;
         if (!a.dueDate) return 1;
         if (!b.dueDate) return -1;
-        return new Date(a.dueDate) - new Date(b.dueDate);
+        return (
+          new Date(`${a.dueDate}T00:00:00`).getTime() -
+          new Date(`${b.dueDate}T00:00:00`).getTime()
+        );
       });
     }
 
@@ -549,7 +592,7 @@ export default function App() {
 
   if (isAuthChecking) {
     return (
-      <div className="flex min-h-[100dvh] items-center justify-center bg-gray-100 text-zinc-900 dark:bg-neutral-950 dark:text-white">
+      <div className="flex min-h-dvh items-center justify-center bg-gray-100 text-zinc-900 dark:bg-neutral-950 dark:text-white">
         Checking authentication...
       </div>
     );
@@ -570,7 +613,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-[100dvh] py-6 text-zinc-900 transition-colors duration-300 dark:text-white">
+    <div className="min-h-dvh py-4 text-zinc-900  sm:py-5 dark:text-white">
       <ConfirmModal
         isOpen={confirmState.isOpen}
         title={confirmState.title}
@@ -583,7 +626,7 @@ export default function App() {
         isLoading={isConfirmLoading}
       />
 
-      <div className="mx-auto max-w-4xl px-3 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-5 sm:py-6 lg:px-6">
+      <main className="mx-auto max-w-3xl px-2 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-4 sm:py-6 lg:px-6">
         <Header
           theme={theme}
           toggleTheme={toggleTheme}
@@ -606,7 +649,7 @@ export default function App() {
           overdue={overdueCount}
         />
 
-        <section className="rounded-[1.25rem] border border-white/60 bg-white/75 p-3 shadow-[0_16px_50px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors duration-300 sm:rounded-[1.75rem] sm:p-5 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
+        <section className="rounded-[1.25rem] border border-white/60 bg-white/75 p-3 shadow-[0_16px_50px_rgba(15,23,42,0.08)]  sm:rounded-[1.75rem] sm:p-4 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
           <TodoForm addTodo={addTodo} isAdding={isAddingTodo} />
 
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -621,16 +664,19 @@ export default function App() {
             hasTodos={normalizedTodos.length > 0}
           />
 
-          <div className="mb-4 flex justify-end text-xs text-zinc-400 dark:text-slate-500">
+          <div className="mb-4 flex flex-wrap justify-end gap-2 text-muted dark:text-slate-500">
             <span>
               {filter === "all" && !searchTerm.trim() && sortBy === "manual"
-                ? "Drag enabled"
-                : "Drag disabled"}
+                ? "Drag and drop is available in this view."
+                : "Drag and drop is unavailable while filtering, searching, or sorting."}
             </span>
           </div>
 
           {errorMessage && !isLoading && normalizedTodos.length > 0 && (
-            <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300">
+            <div
+              className="mb-4 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-body text-red-600 dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300"
+              role="alert"
+            >
               {errorMessage}
             </div>
           )}
@@ -663,7 +709,7 @@ export default function App() {
             />
           )}
         </section>
-      </div>
+      </main>
 
       <ToastContainer
         notifications={notifications}

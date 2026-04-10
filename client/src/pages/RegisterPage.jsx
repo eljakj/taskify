@@ -1,7 +1,12 @@
 import { useState } from "react";
-import { registerUser } from "../services/authApi";
+import { registerUser } from "@/services/authApi";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useTheme } from "@/hooks/useTheme";
+import Logo from "@/components/Logo";
 
 export default function RegisterPage({ onRegister, onSwitchToLogin }) {
+  const { theme, toggleTheme } = useTheme();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -37,14 +42,16 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.10),_transparent_35%),linear-gradient(180deg,_#f8fafc_0%,_#eef2ff_100%)] px-4 py-6 text-zinc-900 transition-colors duration-300 sm:py-8 dark:bg-[radial-gradient(circle_at_top,_rgba(79,70,229,0.22),_transparent_30%),linear-gradient(180deg,_#020617_0%,_#0f172a_100%)] dark:text-white">
-      <div className="mx-auto flex min-h-[100dvh] max-w-5xl items-center justify-center pb-[max(1rem,env(safe-area-inset-bottom))]">
-        <div className="w-full max-w-md rounded-[1.5rem] border border-white/60 bg-white/75 p-5 shadow-[0_20px_80px_rgba(15,23,42,0.10)] backdrop-blur-xl transition-colors duration-300 sm:rounded-[2rem] sm:p-8 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+    <div className="min-h-dvh  px-8  text-zinc-900 dark:text-white">
+      <div className="mx-auto flex min-h-dvh max-w-5xl items-center justify-center pb-[max(1rem,env(safe-area-inset-bottom))]">
+        <div className="w-full max-w-md rounded-xl border border-white/60 bg-white/75 p-5 shadow-[0_20px_80px_rgba(15,23,42,0.10)] sm:p-8 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_20px_80px_rgba(0,0,0,0.35)]">
+          <div className="mb-6 flex items-center space-between justify-between pb-4 border-b border-zinc-200 dark:border-slate-700">
+            <Logo showText={false} />
+            <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
+          </div>
+
           <div className="mb-8 text-center">
-            <p className="mb-3 inline-flex rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-indigo-600 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
-              Taskify
-            </p>
-            <h1 className="text-2xl font-bold sm:text-4xl">Create account</h1>
+            <h1 className="text-page-title">Create account</h1>
             <p className="mt-3 text-sm text-zinc-500 dark:text-slate-400">
               Start organizing your tasks with a personal account
             </p>
@@ -52,46 +59,70 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="mb-2 block text-sm font-medium">Name</label>
+              <label
+                htmlFor="register-name"
+                className="mb-2 block text-sm font-medium"
+              >
+                Name
+              </label>
               <input
+                id="register-name"
                 type="text"
                 name="name"
-                placeholder="Jad"
+                placeholder="John Doe"
                 value={formData.name}
                 onChange={handleChange}
-                className="min-h-[44px] w-full rounded-xl border border-zinc-200 bg-white/80 px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 sm:rounded-2xl sm:text-base dark:border-slate-700 dark:bg-slate-800/80 dark:focus:border-indigo-400 dark:focus:ring-indigo-500/20"
+                autoComplete="name"
+                className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 required
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-medium">Email</label>
+              <label
+                htmlFor="register-email"
+                className="mb-2 block text-sm font-medium"
+              >
+                Email
+              </label>
               <input
+                id="register-email"
                 type="email"
                 name="email"
-                placeholder="jad@example.com"
+                placeholder="Email ID"
                 value={formData.email}
                 onChange={handleChange}
-                className="min-h-[44px] w-full rounded-xl border border-zinc-200 bg-white/80 px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 sm:rounded-2xl sm:text-base dark:border-slate-700 dark:bg-slate-800/80 dark:focus:border-indigo-400 dark:focus:ring-indigo-500/20"
+                autoComplete="email"
+                className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 required
               />
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-medium">Password</label>
+              <label
+                htmlFor="register-password"
+                className="mb-2 block text-sm font-medium"
+              >
+                Password
+              </label>
               <input
+                id="register-password"
                 type="password"
                 name="password"
                 placeholder="Create a password"
                 value={formData.password}
                 onChange={handleChange}
-                className="min-h-[44px] w-full rounded-xl border border-zinc-200 bg-white/80 px-4 py-3 text-sm outline-none transition focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 sm:rounded-2xl sm:text-base dark:border-slate-700 dark:bg-slate-800/80 dark:focus:border-indigo-400 dark:focus:ring-indigo-500/20"
+                autoComplete="new-password"
+                className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 required
               />
             </div>
 
             {error ? (
-              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 sm:rounded-2xl dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300">
+              <div
+                className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 sm:rounded-2xl dark:border-red-900/60 dark:bg-red-950/30 dark:text-red-300"
+                role="alert"
+              >
                 {error}
               </div>
             ) : null}
@@ -99,7 +130,7 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full cursor-pointer rounded-xl bg-zinc-900 py-3 text-sm font-semibold text-white transition hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 sm:rounded-2xl sm:text-base dark:bg-white dark:text-black"
+              className="w-full cursor-pointer rounded-xl bg-zinc-900 py-3 text-sm font-semibold text-white hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60 sm:rounded-2xl sm:text-base dark:bg-white dark:text-black"
             >
               {isLoading ? "Creating account..." : "Register"}
             </button>
@@ -110,7 +141,7 @@ export default function RegisterPage({ onRegister, onSwitchToLogin }) {
             <button
               type="button"
               onClick={onSwitchToLogin}
-              className="cursor-pointer font-semibold text-indigo-600 transition hover:opacity-80 dark:text-indigo-300"
+              className="cursor-pointer font-semibold text-indigo-600 hover:opacity-80 dark:text-indigo-300"
             >
               Login
             </button>
