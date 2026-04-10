@@ -5,7 +5,7 @@ export default function ErrorState({
   isRetrying = false,
 }) {
   return (
-    <div className="rounded-xl border border-red-200 bg-red-50/80 p-3.5 shadow-sm bg-white sm:rounded-2xl sm:p-4 dark:border-red-500/20 dark:bg-red-500/10">
+    <div className="rounded-xl border border-red-200 bg-red-50/80 p-3.5 shadow-sm sm:rounded-2xl sm:p-4 dark:border-red-500/20 dark:bg-red-500/10">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1">
           <div className="mb-2.5 flex h-9 w-9 items-center justify-center rounded-lg bg-red-100 text-sm font-semibold text-red-600 dark:bg-red-500/10 dark:text-red-300">
