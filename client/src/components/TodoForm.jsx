@@ -116,7 +116,7 @@ export default function TodoForm({ addTodo, isAdding }) {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Add description..."
-        rows={10}
+        rows={5}
         disabled={isAdding}
         className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white "
       />

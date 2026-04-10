@@ -154,6 +154,22 @@ http://localhost:5173
 
 ![Edit Task Dark](./client/screenshots/edit-dark.png)
 
+### 👤 Login Light
+
+![Login Light](./client/screenshots/login-light.png)
+
+### 👤 Login Dark
+
+![Login Dark](./client/screenshots/login-dark.png)
+
+### 👤 Register Light
+
+![Register Light](./client/screenshots/Register-light.png)
+
+### 👤 Register Dark
+
+![Register Dark](./client/screenshots/Register-dark.png)
+
 ---
 
 ## 📁 Project Structure
