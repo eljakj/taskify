@@ -4,9 +4,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Todo from "./models/Todo.js";
-import User from "./models/User.js";
-import authMiddleware from "./middleware/authMiddleware.js";
+import Todo from "@/models/Todo.js";
+import User from "@/models/User.js";
+import authMiddleware from "@/middleware/authMiddleware.js";
 
 dotenv.config();
 
