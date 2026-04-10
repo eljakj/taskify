@@ -12,6 +12,7 @@ import TodoListSkeleton from "@/components/TodoListSkeleton";
 import ErrorState from "@/components/ErrorState";
 import LoginPage from "@/pages/LoginPage";
 import RegisterPage from "@/pages/RegisterPage";
+import FullScreenLoader from "@/components/FullScreenLoader";
 import { useTheme } from "@/hooks/useTheme";
 import { getCurrentUser } from "@/services/authApi";
 import {
@@ -591,11 +592,7 @@ export default function App() {
   }, [normalizedTodos, filter, searchTerm, sortBy]);
 
   if (isAuthChecking) {
-    return (
-      <div className="flex min-h-dvh items-center justify-center bg-gray-100 text-zinc-900 dark:bg-neutral-950 dark:text-white">
-        Checking authentication...
-      </div>
-    );
+    return <FullScreenLoader message="Checking authentication..." />;
   }
 
   if (!user) {
