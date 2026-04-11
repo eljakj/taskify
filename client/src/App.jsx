@@ -23,7 +23,7 @@ import {
   setAllTodosCompleted,
   removeTodo,
   clearCompleted,
-} from "./services/todoApi";
+} from "@/services/todoApi";
 
 const priorityRank = {
   high: 0,
@@ -78,6 +78,11 @@ export default function App() {
   const [authMode, setAuthMode] = useState("login");
   const [user, setUser] = useState(getStoredUser);
   const [isAuthChecking, setIsAuthChecking] = useState(true);
+
+  const [authStatus, setAuthStatus] = useState("loading");
+  const [authMessage, setAuthMessage] = useState(
+    "Please wait while we prepare your workspace.",
+  );
 
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -146,16 +151,44 @@ export default function App() {
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("token");
+      const minimumLoaderTime = 900;
+      const startTime = Date.now();
+
+      const finishWithDelay = (callback) => {
+        const elapsed = Date.now() - startTime;
+        const remaining = Math.max(0, minimumLoaderTime - elapsed);
+
+        window.setTimeout(() => {
+          callback?.();
+        }, remaining);
+      };
 
       if (!token) {
-        setIsAuthChecking(false);
-        setIsLoading(false);
+        setAuthStatus("error");
+        setAuthMessage("No active session found. Redirecting to login.");
+
+        finishWithDelay(() => {
+          setUser(null);
+          setIsAuthChecking(false);
+          setIsLoading(false);
+        });
         return;
       }
 
       try {
+        setAuthStatus("loading");
+        setAuthMessage("Verifying your secure session.");
+
         const currentUser = await getCurrentUser(token);
-        setUser(currentUser);
+
+        setAuthStatus("success");
+        setAuthMessage("Authentication successful. Opening your workspace.");
+
+        finishWithDelay(() => {
+          setUser(currentUser);
+          setIsAuthChecking(false);
+          setIsLoading(false);
+        });
       } catch (error) {
         console.error(error);
 
@@ -170,8 +203,14 @@ export default function App() {
           localStorage.removeItem("user");
           setUser(null);
         }
-      } finally {
-        setIsAuthChecking(false);
+
+        setAuthStatus("error");
+        setAuthMessage("Authentication failed. Redirecting to login.");
+
+        finishWithDelay(() => {
+          setIsAuthChecking(false);
+          setIsLoading(false);
+        });
       }
     };
 
@@ -592,7 +631,19 @@ export default function App() {
   }, [normalizedTodos, filter, searchTerm, sortBy]);
 
   if (isAuthChecking) {
-    return <FullScreenLoader message="Checking authentication..." />;
+    return (
+      <FullScreenLoader
+        title={
+          authStatus === "success"
+            ? "Welcome back"
+            : authStatus === "error"
+              ? "Authentication issue"
+              : "Checking authentication"
+        }
+        message={authMessage}
+        status={authStatus}
+      />
+    );
   }
 
   if (!user) {
@@ -610,7 +661,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-dvh py-4 text-zinc-900  sm:py-5 dark:text-white">
+    <div className="min-h-dvh py-4 text-zinc-900 sm:py-5 dark:text-white">
       <ConfirmModal
         isOpen={confirmState.isOpen}
         title={confirmState.title}
@@ -646,7 +697,7 @@ export default function App() {
           overdue={overdueCount}
         />
 
-        <section className="rounded-[1.25rem] border border-white/60 bg-white/75 p-3 shadow-[0_16px_50px_rgba(15,23,42,0.08)]  sm:rounded-[1.75rem] sm:p-4 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
+        <section className="rounded-[1.25rem] border border-white/60 bg-white/75 p-3 shadow-[0_16px_50px_rgba(15,23,42,0.08)] sm:rounded-[1.75rem] sm:p-4 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
           <TodoForm addTodo={addTodo} isAdding={isAddingTodo} />
 
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />

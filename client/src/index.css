@@ -47,10 +47,11 @@ body {
   @apply text-white bg-[radial-gradient(circle_at_top,rgba(79,70,229,0.22),transparent_30%),linear-gradient(180deg,#020617_0%,#0f172a_100%)];
 }
 
-@keyframes modalIn {
+
+@keyframes loaderCardIn {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.98);
+    transform: translateY(18px) scale(0.985);
   }
   to {
     opacity: 1;
@@ -58,14 +59,14 @@ body {
   }
 }
 
-@keyframes fadeIn {
+@keyframes statusPop {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: scale(0.88);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 
