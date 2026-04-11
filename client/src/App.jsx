@@ -151,7 +151,14 @@ export default function App() {
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem("token");
-      const minimumLoaderTime = 900;
+
+      if (!token) {
+        setIsAuthChecking(false);
+        setIsLoading(false);
+        return;
+      }
+
+      const minimumLoaderTime = 800;
       const startTime = Date.now();
 
       const finishWithDelay = (callback) => {
@@ -162,18 +169,6 @@ export default function App() {
           callback?.();
         }, remaining);
       };
-
-      if (!token) {
-        setAuthStatus("error");
-        setAuthMessage("No active session found. Redirecting to login.");
-
-        finishWithDelay(() => {
-          setUser(null);
-          setIsAuthChecking(false);
-          setIsLoading(false);
-        });
-        return;
-      }
 
       try {
         setAuthStatus("loading");
@@ -192,20 +187,9 @@ export default function App() {
       } catch (error) {
         console.error(error);
 
-        const message = error.message?.toLowerCase() || "";
-
-        if (
-          message.includes("invalid token") ||
-          message.includes("unauthorized") ||
-          message.includes("user not found")
-        ) {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          setUser(null);
-        }
-
-        setAuthStatus("error");
-        setAuthMessage("Authentication failed. Redirecting to login.");
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        setUser(null);
 
         finishWithDelay(() => {
           setIsAuthChecking(false);
@@ -634,11 +618,7 @@ export default function App() {
     return (
       <FullScreenLoader
         title={
-          authStatus === "success"
-            ? "Welcome back"
-            : authStatus === "error"
-              ? "Authentication issue"
-              : "Checking authentication"
+          authStatus === "success" ? "Welcome back" : "Checking authentication"
         }
         message={authMessage}
         status={authStatus}
