@@ -69,11 +69,14 @@ export default function TodoForm({ addTodo, isAdding }) {
   const dueDateRef = useRef(null);
 
   const openDatePicker = () => {
-    if (isAdding) return;
-    if (dueDateRef.current?.showPicker) {
-      dueDateRef.current.showPicker();
+    const input = dueDateRef.current;
+    if (!input) return;
+
+    if (typeof input.showPicker === "function") {
+      input.showPicker();
     } else {
-      dueDateRef.current?.focus();
+      input.focus();
+      input.click();
     }
   };
 
@@ -109,7 +112,7 @@ export default function TodoForm({ addTodo, isAdding }) {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Add a new task..."
         disabled={isAdding}
-        className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+        className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-base text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
       />
 
       <textarea
@@ -118,7 +121,7 @@ export default function TodoForm({ addTodo, isAdding }) {
         placeholder="Add description..."
         rows={5}
         disabled={isAdding}
-        className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white "
+        className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-base text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white "
       />
 
       <div className="grid gap-2.5 sm:grid-cols-2">
@@ -163,7 +166,7 @@ export default function TodoForm({ addTodo, isAdding }) {
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
               disabled={isAdding}
-              className=" absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
+              className="text-base absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
               
             />
           </div>

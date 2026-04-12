@@ -409,7 +409,7 @@ export default function TodoItem({
                 value={editedTitle}
                 onChange={(e) => setEditedTitle(e.target.value)}
                 disabled={isSaving}
-                className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-base text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
               />
 
               <textarea
@@ -417,7 +417,7 @@ export default function TodoItem({
                 onChange={(e) => setEditedDescription(e.target.value)}
                 rows={10}
                 disabled={isSaving}
-                className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-body text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white "
+                className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-base text-zinc-800 shadow-md outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white "
               />
 
               <div className="grid gap-2.5 sm:grid-cols-2">
@@ -457,9 +457,7 @@ export default function TodoItem({
                     value={editedDueDate}
                     onChange={(e) => setEditedDueDate(e.target.value)}
                     disabled={isSaving}
-                    className="pointer-events-none absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
-                    tabIndex={-1}
-                    aria-hidden="true"
+                    className="absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
                   />
                 </div>
               </div>
