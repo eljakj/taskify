@@ -163,7 +163,7 @@ export default function TodoForm({ addTodo, isAdding }) {
               value={dueDate}
               onChange={(e) => setDueDate(e.target.value)}
               disabled={isAdding}
-              className="pointer-events-none absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
+              className=" absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
               
             />
           </div>
