@@ -729,7 +729,7 @@ export default function App() {
         isLoading={isConfirmLoading}
       />
 
-      <main className="mx-auto max-w-3xl px-2 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] sm:px-4 sm:py-6 lg:px-6">
+      <main className="mx-auto max-w-3xl px-2 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[env(safe-area-inset-top)] sm:px-4 sm:py-6 lg:px-6">
         <Header
           theme={theme}
           toggleTheme={toggleTheme}

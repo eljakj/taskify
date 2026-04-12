@@ -4,6 +4,7 @@
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
 }
 
 *,
@@ -20,7 +21,7 @@ html {
 }
 
 html.dark {
-  background-color: #020617;
+  background-color: red;
 }
 
 body,
@@ -126,7 +127,7 @@ body {
   }
 
   .text-section-title {
-    @apply text-lg sm:text-xl font-semibold;
+    @apply sm:text-xl font-semibold;
   }
 
   .text-card-title {
