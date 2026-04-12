@@ -79,7 +79,7 @@ export default function FullScreenLoader({
       </div>
 
       <div className="relative w-full max-w-sm px-4">
-        <div className="rounded-2xl border border-white/60 p-8 text-center animate-[cardReveal_480ms_cubic-bezier(0.22,1,0.36,1)] dark:border-white/10">
+        <div className="rounded-2xl border border-black/10 p-8 text-center animate-[cardReveal_480ms_cubic-bezier(0.22,1,0.36,1)] dark:border-white/10">
           <div className="mb-6 flex justify-center animate-[contentRise_520ms_80ms_both]">
             <Logo />
           </div>
