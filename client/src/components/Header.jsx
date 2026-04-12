@@ -40,7 +40,7 @@ function ProfileMenu({ user, onLogout, isLoggingOut }) {
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 shadow-md hover:-translate-y-0.5 hover:bg-zinc-100 active:scale-[0.96] dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:bg-slate-800"
+        className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 hover:-translate-y-0.5 hover:bg-zinc-100 active:scale-[0.96] dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:bg-slate-800"
       >
         {user?.name?.charAt(0)?.toUpperCase() || "U"}
       </button>

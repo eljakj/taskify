@@ -43,7 +43,7 @@ export default function FilterBar({
         type="button"
         onClick={toggleAllCompleted}
         disabled={!hasTodos}
-        className="min-h-11 w-full cursor-pointer whitespace-nowrap rounded-xl bg-indigo-600 px-4 py-2.5 text-body font-semibold text-white shadow-md shadow-zinc-950/10 hover:-translate-y-0.5 hover:opacity-95 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 lg:w-auto lg:min-w-31 dark:bg-indigo-600 dark:shadow-indigo-600/20"
+        className="min-h-11 w-full cursor-pointer whitespace-nowrap rounded-xl bg-indigo-600 px-4 py-2.5 text-body font-semibold text-white hover:opacity-95 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 lg:w-auto lg:min-w-31 dark:bg-indigo-600 "
       >
         {allCompleted ? "Deselect all" : "Select all"}
       </button>

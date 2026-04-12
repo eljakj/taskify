@@ -23,7 +23,7 @@ export default function Logo({ size = "md", showText = true }) {
     <div className="flex min-w-0 items-center gap-2.5">
       {/* Icon */}
       <div
-        className={`group relative flex shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-indigo-600 via-violet-600 to-sky-500 shadow-md shadow-indigo-500/25 ${current.box}`}
+        className={`group relative flex shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-indigo-600 via-violet-600 to-sky-500 shadow-indigo-500/25 ${current.box}`}
       >
         <svg
           viewBox="0 0 24 24"

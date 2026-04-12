@@ -32,7 +32,7 @@ export default function StatsBar({ total, active, completed, overdue }) {
       {cards.map((card) => (
         <div
           key={card.label}
-          className={`rounded-xl border p-2.5 shadow-md hover:-translate-y-0.5 hover:shadow-md active:scale-[0.98] sm:rounded-2xl sm:p-3 ${card.className}`}
+          className={`rounded-xl border p-2.5 hover:-translate-y-0.5  active:scale-[0.98] sm:rounded-2xl sm:p-3 ${card.className}`}
         >
           <p className="text-[10px] font-semibold uppercase sm:text-[11px]">
             {card.label}

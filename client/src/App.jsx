@@ -752,7 +752,7 @@ export default function App() {
           overdue={overdueCount}
         />
 
-        <section className="rounded-[1.25rem] border border-white/60 bg-white/75 p-3 shadow-[0_16px_50px_rgba(15,23,42,0.08)] sm:rounded-[1.75rem] sm:p-4 dark:border-white/10 dark:bg-slate-900/75 dark:shadow-[0_16px_50px_rgba(0,0,0,0.28)]">
+        <section className="rounded-[1.25rem] border border-zinc-200 bg-white p-3  sm:rounded-[1.75rem] sm:p-4 dark:border-slate-700 dark:bg-slate-900/70 ">
           <TodoForm addTodo={addTodo} isAdding={isAddingTodo} />
 
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
