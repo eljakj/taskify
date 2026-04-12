@@ -290,10 +290,14 @@ export default function TodoItem({
   const openEditedDatePicker = () => {
     if (isSaving) return;
 
-    if (editedDateRef.current?.showPicker) {
-      editedDateRef.current.showPicker();
+    const input = editedDateRef.current;
+    if (!input) return;
+
+    if (typeof input.showPicker === "function") {
+      input.showPicker();
     } else {
-      editedDateRef.current?.focus();
+      input.focus();
+      input.click();
     }
   };
 
@@ -457,7 +461,7 @@ export default function TodoItem({
                     value={editedDueDate}
                     onChange={(e) => setEditedDueDate(e.target.value)}
                     disabled={isSaving}
-                    className="absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme"
+                    className="text-base absolute inset-0 h-full w-full opacity-0 color-scheme dark:color-scheme md:pointer-events-none"
                   />
                 </div>
               </div>
