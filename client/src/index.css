@@ -20,9 +20,7 @@ html {
   font-size: 15px;
 }
 
-html.dark {
-  background-color: red;
-}
+
 
 body,
 #root {
