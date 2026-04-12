@@ -3,13 +3,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  /* Font */
   --font-sans: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
-  --app-bg-light: #f6f8ff;
-  --app-bg-light-soft: #eef2ff;
-
-  --app-bg-dark: #060d18;
-  --app-bg-dark-soft: #0a1426;
+ 
 }
 
 *,
@@ -21,20 +18,16 @@
 html {
   height: 100%;
   -webkit-text-size-adjust: 100%;
-  background: linear-gradient(180deg, var(--app-bg-light) 0%, var(--app-bg-light-soft) 100%);
+  background: red;
 }
-
 
 body {
   margin: 0;
   overflow-x: hidden;
-  background: linear-gradient(180deg, var(--app-bg-light) 0%, var(--app-bg-light-soft) 100%);
-}
-
-
-
-.dark body {
-  background: linear-gradient(180deg, var(--app-bg-dark) 0%, var(--app-bg-dark-soft) 100%);
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100dvh;
+  
+  
 }
 
 #root {
