@@ -48,7 +48,7 @@ function ProfileMenu({ user, onLogout, isLoggingOut }) {
       {isOpen && (
         <div className="absolute right-0 top-11 z-50 w-[min(14rem,calc(100vw-1.5rem))] overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-xl dark:border-slate-700 dark:bg-slate-900">
           <div className="border-b border-zinc-200 px-3 py-2.5 dark:border-slate-700">
-            <p className="truncate text-body font-semibold text-zinc-900 dark:text-white">
+            <p className="truncate text-body font-medium text-zinc-800 dark:text-white">
               {user.name}
             </p>
             <p className="mt-0.5 text-muted truncate">{user.email}</p>

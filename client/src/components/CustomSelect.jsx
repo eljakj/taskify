@@ -111,7 +111,7 @@ export default function CustomSelect({
         type="button"
         disabled={disabled}
         onClick={() => setIsOpen((prev) => !prev)}
-        className="grid min-h-11 w-full cursor-pointer grid-cols-[1fr_auto] items-center rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-left text-sm font-medium text-zinc-700 shadow-sm outline-none hover:border-indigo-500 focus:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 "
+        className="grid min-h-11 w-full cursor-pointer grid-cols-[1fr_auto] items-center rounded-xl border border-zinc-200 bg-white/90 px-4 py-3 text-left text-sm font-medium text-zinc-700 outline-none hover:border-indigo-500 focus:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 "
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >

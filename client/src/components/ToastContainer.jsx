@@ -34,10 +34,10 @@ export default function ToastContainer({ notifications, dismissNotification }) {
             </div>
 
             <div className="min-w-0 flex-1">
-              <p className="wrap-break-words text-body font-semibold">
+              <p className="wrap-break-words text-body font-medium">
                 {notification.message}
               </p>
-              <p className="mt-0.5 text-xs text-white/80">
+              <p className="mt-0.5 text-xs text-white">
                 {notification.createdAt}
               </p>
             </div>
@@ -45,7 +45,7 @@ export default function ToastContainer({ notifications, dismissNotification }) {
             <button
               type="button"
               onClick={() => dismissNotification(notification.id)}
-              className="cursor-pointer text-sm text-white/80 hover:text-white"
+              className="cursor-pointer text-sm text-white hover:text-white"
               aria-label="Dismiss toast"
             >
               ✕

@@ -85,12 +85,12 @@ export default function FullScreenLoader({
           </div>
 
           <div
-            className={`mb-5 inline-flex rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] animate-[contentRise_520ms_140ms_both] ${badgeStyles[status]}`}
+            className={`mb-5 inline-flex rounded-full border px-3 py-1 text-[11px] font-medium uppercase tracking-[0.2em] animate-[contentRise_520ms_140ms_both] ${badgeStyles[status]}`}
           >
             {badgeText[status]}
           </div>
 
-          <h2 className="animate-[contentRise_520ms_200ms_both] text-xl font-semibold tracking-tight">
+          <h2 className="animate-[contentRise_520ms_200ms_both] text-xl font-medium tracking-tight">
             {title}
           </h2>
 

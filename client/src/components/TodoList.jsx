@@ -124,7 +124,7 @@ export default function TodoList({
               <button
                 type="button"
                 onClick={requestClearCompleted}
-                className="min-h-10 cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-muted font-semibold hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
+                className="min-h-10 cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-muted font-medium hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
               >
                 Clear completed
               </button>
@@ -186,7 +186,7 @@ export default function TodoList({
             <button
               type="button"
               onClick={requestClearCompleted}
-              className="min-h-10 cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-muted font-semibold hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
+              className="min-h-10 cursor-pointer rounded-lg border border-zinc-200 px-3 py-2 text-muted font-medium hover:bg-zinc-100 active:scale-[0.98] dark:border-slate-700 dark:hover:bg-slate-800"
             >
               Clear completed
             </button>

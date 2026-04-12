@@ -336,13 +336,9 @@ export default function TodoItem({
       draggable={!isEditing && !isSaving}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      className={`relative flex flex-col gap-3 overflow-visible rounded-xl border p-2.5 shadow-sm  transition-all duration-200 sm:flex-row sm:items-start sm:justify-between sm:rounded-2xl sm:p-3 ${
+      className={`relative flex flex-col gap-3 overflow-visible rounded-xl border p-2.5  transition-all duration-200 sm:flex-row sm:items-start sm:justify-between sm:rounded-2xl sm:p-3 ${
         isEditing ? "z-30" : "z-0"
-      } ${
-        isDragging
-          ? "scale-[0.98] opacity-50"
-          : "hover:-translate-y-0.5"
-      } ${
+      } ${isDragging ? "scale-[0.98] opacity-50" : "hover:-translate-y-0.5"} ${
         isDragOver
           ? "border-indigo-200 bg-indigo-200 dark:border-indigo-500/20 dark:bg-indigo-500/20"
           : dueDateStatus?.isOverdue
@@ -490,7 +486,7 @@ export default function TodoItem({
             <>
               <div className="flex flex-wrap items-center gap-1.5">
                 <h3
-                  className={`wrap-break-words whitespace-pre-wrap text-card-title text-zinc-900 dark:text-zinc-100 ${
+                  className={`wrap-break-words whitespace-pre-wrap text-card-title text-zinc-800 dark:text-zinc-100 ${
                     todo.completed ? "line-through opacity-50" : ""
                   }`}
                 >
@@ -498,7 +494,7 @@ export default function TodoItem({
                 </h3>
 
                 <span
-                  className={`rounded-full border px-2 py-0.5 text-xs font-semibold capitalize ${
+                  className={`rounded-full border px-2 py-0.5 text-xs font-medium capitalize ${
                     priorityStyles[todo.priority || "medium"]
                   }`}
                 >
@@ -507,7 +503,7 @@ export default function TodoItem({
 
                 {dueDateStatus && (
                   <span
-                    className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${dueDateStatus.className}`}
+                    className={`rounded-full border px-2 py-0.5 text-xs font-medium ${dueDateStatus.className}`}
                   >
                     {dueDateStatus.label}
                   </span>
@@ -547,7 +543,7 @@ export default function TodoItem({
             type="button"
             onClick={() => setIsMenuOpen((prev) => !prev)}
             disabled={isSaving}
-            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-zinc-200 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-800 active:scale-[0.96] disabled:cursor-not-allowed disabled:opacity-60 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
             aria-label="Open task actions"
             aria-expanded={isMenuOpen}
             title="More actions"
@@ -560,7 +556,7 @@ export default function TodoItem({
               <div
                 ref={menuRef}
                 style={menuStyle}
-                className="z-9999 overflow-hidden rounded-xl border border-zinc-200 bg-white/95 p-1 shadow-[0_16px_40px_rgba(15,23,42,0.14)] bg-white-xl dark:border-slate-700 dark:bg-slate-900"
+                className="z-9999 overflow-hidden rounded-xl border border-zinc-200 bg-white/95 p-1  bg-white-xl dark:border-slate-700 dark:bg-slate-900"
               >
                 <button
                   type="button"

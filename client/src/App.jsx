@@ -716,7 +716,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-dvh px-6 py-8 text-zinc-900  dark:text-white ">
+    <div className="min-h-dvh px-6 py-8 text-zinc-800  dark:text-white ">
       <ConfirmModal
         isOpen={confirmState.isOpen}
         title={confirmState.title}

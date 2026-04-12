@@ -126,7 +126,7 @@ export default function TodoForm({ addTodo, isAdding }) {
 
       <div className="grid gap-2.5 sm:grid-cols-2">
         <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 dark:border-slate-700 dark:bg-slate-900/80">
-          <p className="mb-2 text-muted font-semibold uppercase">Priority</p>
+          <p className="mb-2 text-muted font-medium uppercase">Priority</p>
 
           <CustomSelect
             value={priority}
@@ -138,7 +138,7 @@ export default function TodoForm({ addTodo, isAdding }) {
         </div>
 
         <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 dark:border-slate-700 dark:bg-slate-900/80">
-          <p className="mb-2 text-muted font-semibold uppercase">Due date</p>
+          <p className="mb-2 text-muted font-medium uppercase">Due date</p>
 
           <div className="relative">
             <button
@@ -171,7 +171,7 @@ export default function TodoForm({ addTodo, isAdding }) {
       <button
         type="submit"
         disabled={isAdding}
-        className="w-full cursor-pointer rounded-xl bg-indigo-600 py-2.5 text-body font-semibold text-white hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+        className="w-full cursor-pointer rounded-xl bg-indigo-600 py-2.5 text-body font-medium text-white hover:opacity-90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
       >
         {isAdding ? "Adding..." : "Add task"}
       </button>

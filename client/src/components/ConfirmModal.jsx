@@ -36,7 +36,7 @@ export default function ConfirmModal({
       >
         <div className="mb-4 flex items-start gap-2.5">
           <div
-            className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-bold ${
+            className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-normal ${
               isDanger
                 ? "bg-red-100 text-red-600 dark:bg-red-500/10 dark:text-red-300"
                 : "bg-indigo-100 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-300"
@@ -46,7 +46,7 @@ export default function ConfirmModal({
           </div>
 
           <div className="min-w-0 flex-1">
-            <h2 className="text-card-title text-zinc-900 dark:text-white">
+            <h2 className="text-card-title text-zinc-800 dark:text-white">
               {title}
             </h2>
 
@@ -61,7 +61,7 @@ export default function ConfirmModal({
             type="button"
             onClick={onCancel}
             disabled={isLoading}
-            className="w-full cursor-pointer rounded-lg border border-zinc-200 px-4 py-2.5 text-body font-semibold text-zinc-700 hover:bg-zinc-100 disabled:opacity-60 sm:w-auto dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+            className="w-full cursor-pointer rounded-lg border border-zinc-200 px-4 py-2.5 text-body font-medium text-zinc-700 hover:bg-zinc-100 disabled:opacity-60 sm:w-auto dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             {cancelText}
           </button>
@@ -70,7 +70,7 @@ export default function ConfirmModal({
             type="button"
             onClick={onConfirm}
             disabled={isLoading}
-            className={`w-full cursor-pointer rounded-lg px-4 py-2.5 text-body font-semibold text-white hover:-translate-y-0.5 hover:opacity-95 disabled:opacity-70 sm:w-auto ${
+            className={`w-full cursor-pointer rounded-lg px-4 py-2.5 text-body font-medium text-white hover:-translate-y-0.5 hover:opacity-95 disabled:opacity-70 sm:w-auto ${
               isDanger
                 ? "bg-red-500 shadow-red-500/20 dark:bg-red-600"
                 : "bg-indigo-600 shadow-indigo-600/20"
