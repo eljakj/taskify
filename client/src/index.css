@@ -28,6 +28,10 @@ body {
   min-height: 100dvh;
 }
 
+input {
+  font-size: 16px;
+}
+
 
 
 @keyframes cardReveal {
