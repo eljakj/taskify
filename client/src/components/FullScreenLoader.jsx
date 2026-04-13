@@ -90,7 +90,7 @@ export default function FullScreenLoader({
             {badgeText[status]}
           </div>
 
-          <h2 className="animate-[contentRise_520ms_200ms_both] text-xl font-medium tracking-tight">
+          <h2 className="animate-[contentRise_520ms_200ms_both] text-xl font-medium tracking-tight text-black dark:text-white">
             {title}
           </h2>
 
