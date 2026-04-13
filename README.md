@@ -8,8 +8,8 @@ Built to demonstrate fullstack architecture, authentication, and responsive desi
 
 ## 🚀 Live Demo
 
-👉 Frontend: https://taskify-three-cyan.vercel.app/
-👉 API: https://taskify-api-knxa.onrender.com
+- 👉 Frontend: https://taskify-three-cyan.vercel.app/
+- 👉 API: https://taskify-api-knxa.onrender.com
 
 You can create your own account to explore the app.
 
@@ -19,39 +19,39 @@ You can create your own account to explore the app.
 
 ### 🧩 Task Management
 
-* Add, edit, delete tasks
-* Drag & drop reordering
-* Clear completed tasks with animation
+- Add, edit, delete tasks
+- Drag & drop reordering
+- Clear completed tasks with animation
 
 ### 📅 Organization
 
-* Priority system (Low, Medium, High)
-* Due dates with smart status (Overdue, Today, Tomorrow)
-* Filtering (All, Active, Completed)
-* Advanced sorting (Manual, Newest, Oldest, Priority, Due date)
+- Priority system (Low, Medium, High)
+- Due dates with smart status (Overdue, Today, Tomorrow)
+- Filtering (All, Active, Completed)
+- Advanced sorting (Manual, Newest, Oldest, Priority, Due date)
 
 ### 🔍 UX & UI
 
-* Real-time search
-* Dark / Light mode
-* Toast notifications
-* Loading states + Skeleton UI
-* Error handling with retry system
+- Real-time search
+- Dark / Light mode
+- Toast notifications
+- Loading states + Skeleton UI
+- Error handling with retry system
 
 ### 🔐 Authentication
 
-* JWT-based authentication
-* User-specific todos
-* Protected API routes
+- JWT-based authentication
+- User-specific todos
+- Protected API routes
 
 ---
 
 ## 📱 Responsive Design
 
-* Mobile-first layout
-* Optimized for iOS & Android
-* Native date picker support
-* Full-height layout (no white edges on mobile)
+- Mobile-first layout
+- Optimized for iOS & Android
+- Native date picker support
+- Full-height layout (no white edges on mobile)
 
 ---
 
@@ -59,20 +59,20 @@ You can create your own account to explore the app.
 
 ### Frontend
 
-* React (Vite)
-* Tailwind CSS
+- React (Vite)
+- Tailwind CSS
 
 ### Backend
 
-* Node.js
-* Express
-* MongoDB Atlas
-* Mongoose
+- Node.js
+- Express
+- MongoDB Atlas
+- Mongoose
 
 ### Auth & Security
 
-* JWT
-* bcryptjs
+- JWT
+- bcryptjs
 
 ---
 
@@ -194,11 +194,11 @@ server/
 
 ## ⚡ Future Improvements
 
-* 🗂 Task categories / tags
-* 🔔 Notifications / reminders
-* 📊 Analytics dashboard
-* 🎨 User-specific themes
-* 📱 PWA support
+- 🗂 Task categories / tags
+- 🔔 Notifications / reminders
+- 📊 Analytics dashboard
+- 🎨 User-specific themes
+- 📱 PWA support
 
 ---
 
@@ -206,16 +206,16 @@ server/
 
 ### Auth
 
-* POST /api/auth/register
-* POST /api/auth/login
-* GET /api/auth/me
+- POST /api/auth/register
+- POST /api/auth/login
+- GET /api/auth/me
 
 ### Todos
 
-* GET /api/todos
-* POST /api/todos
-* PUT /api/todos/:id
-* DELETE /api/todos/:id
+- GET /api/todos
+- POST /api/todos
+- PUT /api/todos/:id
+- DELETE /api/todos/:id
 
 ---
 
