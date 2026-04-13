@@ -1,33 +1,57 @@
-# 📝 Taskify – Fullstack Todo App
+# 📝 Taskify
+
+A modern fullstack task management app with a clean UI, smooth UX, and powerful features like drag & drop, filtering, and real-time search.
+
+Built to demonstrate fullstack architecture, authentication, and responsive design.
+
+---
 
 ## 🚀 Live Demo
 
-Frontend: https://taskify-three-cyan.vercel.app/
-Backend: https://taskify-api-knxa.onrender.com
+👉 Frontend: https://taskify-three-cyan.vercel.app/
+👉 API: https://taskify-api-knxa.onrender.com
 
-A fullstack Todo application with authentication, user-specific data, and advanced task management features.
-Built with React, Node.js, Express, and MongoDB.
+You can create your own account to explore the app.
 
 ---
 
 ## ✨ Features
 
-- ✅ Add, edit, delete tasks
-- 🎯 Priority system (Low, Medium, High)
-- 📅 Due dates with smart status (Overdue, Today, Tomorrow)
-- 🔍 Real-time search
-- 🧩 Filtering (All, Active, Completed)
-- 🔄 Advanced sorting (Manual, Newest, Oldest, Priority, Due date)
-- 🖱 Drag & drop reordering
-- 🌙 Dark / Light mode
-- 🔔 Toast notifications
-- ⚠️ Error handling with retry system
-- ⏳ Loading states + Skeleton UI
-- 🧹 Clear completed tasks with animation
-- ☁️ Persistent cloud database with MongoDB Atlas
-- 🔐 User authentication with JWT
-- 👤 User-specific todos
-- 🔒 Protected API routes
+### 🧩 Task Management
+
+* Add, edit, delete tasks
+* Drag & drop reordering
+* Clear completed tasks with animation
+
+### 📅 Organization
+
+* Priority system (Low, Medium, High)
+* Due dates with smart status (Overdue, Today, Tomorrow)
+* Filtering (All, Active, Completed)
+* Advanced sorting (Manual, Newest, Oldest, Priority, Due date)
+
+### 🔍 UX & UI
+
+* Real-time search
+* Dark / Light mode
+* Toast notifications
+* Loading states + Skeleton UI
+* Error handling with retry system
+
+### 🔐 Authentication
+
+* JWT-based authentication
+* User-specific todos
+* Protected API routes
+
+---
+
+## 📱 Responsive Design
+
+* Mobile-first layout
+* Optimized for iOS & Android
+* Native date picker support
+* Full-height layout (no white edges on mobile)
 
 ---
 
@@ -35,17 +59,20 @@ Built with React, Node.js, Express, and MongoDB.
 
 ### Frontend
 
-- React (Vite)
-- Tailwind CSS
+* React (Vite)
+* Tailwind CSS
 
 ### Backend
 
-- Node.js
-- Express
-- MongoDB Atlas
-- Mongoose
-- JWT
-- bcryptjs
+* Node.js
+* Express
+* MongoDB Atlas
+* Mongoose
+
+### Auth & Security
+
+* JWT
+* bcryptjs
 
 ---
 
@@ -75,8 +102,6 @@ VITE_API_URL=http://localhost:5000
 git clone https://github.com/eljakj/taskify.git
 cd taskify
 ```
-
----
 
 ### 2. Install dependencies
 
@@ -111,8 +136,6 @@ Backend runs on:
 http://localhost:5000
 ```
 
----
-
 ### Start frontend
 
 ```bash
@@ -138,37 +161,17 @@ http://localhost:5173
 
 ![Dark Mode](./client/screenshots/dark.png)
 
-### ➕ Add Task Light
+### ➕ Add Task
 
 ![Add Task Light](./client/screenshots/add-light.png)
 
-### ➕ Add Task Dark
-
-![Add Task Dark](./client/screenshots/add-dark.png)
-
-### ✏️ Edit Task Light
+### ✏️ Edit Task
 
 ![Edit Task Light](./client/screenshots/edit-light.png)
 
-### ✏️ Edit Task Dark
-
-![Edit Task Dark](./client/screenshots/edit-dark.png)
-
-### 👤 Login Light
+### 👤 Authentication
 
 ![Login Light](./client/screenshots/login-light.png)
-
-### 👤 Login Dark
-
-![Login Dark](./client/screenshots/login-dark.png)
-
-### 👤 Register Light
-
-![Register Light](./client/screenshots/register-light.png)
-
-### 👤 Register Dark
-
-![Register Dark](./client/screenshots/register-dark.png)
 
 ---
 
@@ -178,41 +181,49 @@ http://localhost:5173
 client/
  ├── src/
  ├── public/
- ├── package.json
+ └── package.json
 
 server/
  ├── server.js
- ├── package.json
+ ├── routes/
+ ├── models/
+ └── package.json
 ```
 
 ---
 
 ## ⚡ Future Improvements
 
-- 🗂 Task categories / tags
-- 🔔 Notifications / reminders
-- 📱 Mobile optimization
-- 📊 Analytics dashboard
-- 🎨 User-specific theme settings
+* 🗂 Task categories / tags
+* 🔔 Notifications / reminders
+* 📊 Analytics dashboard
+* 🎨 User-specific themes
+* 📱 PWA support
 
 ---
 
 ## 🔗 API Endpoints
 
 ### Auth
-- POST /api/auth/register
-- POST /api/auth/login
-- GET /api/auth/me
+
+* POST /api/auth/register
+* POST /api/auth/login
+* GET /api/auth/me
 
 ### Todos
-- GET /api/todos
-- POST /api/todos
-- PUT /api/todos/:id
-- DELETE /api/todos/:id
+
+* GET /api/todos
+* POST /api/todos
+* PUT /api/todos/:id
+* DELETE /api/todos/:id
 
 ---
 
 ## 👨‍💻 Author
 
-Jad El Jakhlab
+**Jad El Jakhlab**
 GitHub: https://github.com/eljakj
+
+---
+
+Made with ❤️
