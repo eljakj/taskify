@@ -18,7 +18,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://taskify-6du99o387-eljakjs-projects.vercel.app",
+      "https://taskify-azure-three.vercel.app/",
     ],
     credentials: true,
   }),
