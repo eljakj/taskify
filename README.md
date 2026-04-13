@@ -157,21 +157,21 @@ http://localhost:5173
 
 ![Light Mode](./client/screenshots/light.png)
 
+![Light Mode](./client/screenshots/login-light.png)
+
+![Light Mode](./client/screenshots/register-light.png)
+
+
+
 ### 🌙 Dark Mode
 
 ![Dark Mode](./client/screenshots/dark.png)
 
-### ➕ Add Task
+![Dark Mode](./client/screenshots/login-dark.png)
 
-![Add Task Light](./client/screenshots/add-light.png)
+![Dark Mode](./client/screenshots/register-dark.png)
 
-### ✏️ Edit Task
 
-![Edit Task Light](./client/screenshots/edit-light.png)
-
-### 👤 Authentication
-
-![Login Light](./client/screenshots/login-light.png)
 
 ---
 
