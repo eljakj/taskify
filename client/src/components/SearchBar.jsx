@@ -42,7 +42,7 @@ export default function SearchBar({ searchTerm, setSearchTerm }) {
           value={localValue}
           onChange={(event) => setLocalValue(event.target.value)}
           placeholder="Search tasks, priority, date..."
-          className="min-h-12 w-full rounded-xl border border-zinc-200 bg-white/90 py-2.5 pl-10 pr-3.5 text-body text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-indigo-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-indigo-500"
+          className="min-h-12 w-full rounded-xl border border-zinc-200 bg-white/90 py-2.5 pl-10 pr-3.5 text-base text-zinc-800 outline-none placeholder:text-zinc-400 focus:border-indigo-600 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500 dark:focus:border-indigo-500"
         />
       </div>
     </div>
