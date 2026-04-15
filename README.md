@@ -8,7 +8,7 @@ Built to demonstrate fullstack architecture, protected API design, and responsiv
 
 ## 🚀 Live Demo
 
-- Frontend: https://taskify-three-cyan.vercel.app
+- Frontend: https://taskify-xi-flax.vercel.app/
 - API: https://taskify-0cs4.onrender.com
 - Health Check: https://taskify-0cs4.onrender.com/api/health
 
