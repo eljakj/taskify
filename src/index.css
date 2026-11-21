@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Font */
+  --font-sans:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+
+  background: #f4f2ff;
+ 
+}
+
+html.dark {
+  background: #020024;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100dvh;
+}
+
+#root {
+  min-height: 100dvh;
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes contentRise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loaderSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes statusPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  70% {
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes statusRing {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.72);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+@keyframes ambientFloat {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(10px) translateX(6px);
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@layer components {
+  .text-page-title {
+    @apply font-mono text-lg sm:text-xl font-normal tracking-wide leading-relaxed;
+  }
+
+  .text-section-title {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-card-title {
+    @apply text-sm sm:text-base font-medium;
+  }
+
+  .text-body {
+    @apply font-mono text-sm sm:text-base font-normal tracking-wide leading-relaxed;
+  }
+
+  .text-muted {
+    @apply font-mono text-xs sm:text-sm tracking-wide;
+  }
+}
