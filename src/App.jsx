@@ -22,6 +22,7 @@ import {
   removeTodo,
   clearCompleted,
   replaceTodos,
+  subscribeToOtherTabs,
   isStoragePersistent,
 } from "@/services/todoApi";
 
@@ -118,6 +119,13 @@ export default function App() {
   useEffect(() => {
     fetchTodos();
   }, [fetchTodos]);
+
+  useEffect(() => {
+    // Keep this tab in sync when tasks change in another tab.
+    return subscribeToOtherTabs(async () => {
+      setTodos(await getTodos());
+    });
+  }, []);
 
   const normalizedTodos = useMemo(() => {
     return todos.map((todo, index) => ({

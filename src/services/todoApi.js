@@ -107,6 +107,20 @@ const writeAll = (todos) => {
   return next;
 };
 
+/**
+ * Calls onChange when another browser tab changes the stored tasks.
+ * Returns a function that stops listening.
+ */
+export const subscribeToOtherTabs = (onChange) => {
+  const handleStorage = (event) => {
+    // key is null when another tab cleared all site data.
+    if (event.key === STORAGE_KEY || event.key === null) onChange();
+  };
+
+  window.addEventListener("storage", handleStorage);
+  return () => window.removeEventListener("storage", handleStorage);
+};
+
 /** False when the browser blocks localStorage (tasks then only live until reload). */
 export const isStoragePersistent = () => persistent;
 
