@@ -31,11 +31,6 @@ export function useTheme() {
 
     root.classList.toggle("dark", resolvedTheme === "dark");
     root.style.colorScheme = resolvedTheme;
-    try {
-      localStorage.setItem(STORAGE_KEY, resolvedTheme);
-    } catch {
-      // Storage blocked: theme still works, it is just not remembered.
-    }
   }, [theme]);
 
   useEffect(() => {
@@ -51,7 +46,14 @@ export function useTheme() {
   }, []);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      // Storage blocked: theme still works, it is just not remembered.
+    }
   };
 
   return { theme, toggleTheme };
