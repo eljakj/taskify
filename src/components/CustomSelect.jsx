@@ -131,7 +131,10 @@ export default function CustomSelect({
             style={menuStyle}
             className="z-9999 overflow-hidden rounded-xl border border-zinc-200 bg-white p-1.5 shadow-xl/30  dark:border-slate-700 dark:bg-slate-900"
           >
-            <ul className="max-h-60 overflow-auto" role="listbox">
+            <ul
+              className="flex max-h-60 flex-col gap-1 overflow-auto"
+              role="listbox"
+            >
               {options.map((option) => {
                 const isSelected = option.value === value;
 
