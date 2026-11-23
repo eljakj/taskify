@@ -467,7 +467,7 @@ export default function TodoItem({
             <>
               <div className="flex flex-wrap items-center gap-1.5">
                 <h3
-                  className={`wrap-break-words whitespace-pre-wrap text-card-title text-zinc-800 dark:text-zinc-100 ${
+                  className={`wrap-anywhere whitespace-pre-wrap text-card-title text-zinc-800 dark:text-zinc-100 ${
                     todo.completed ? "line-through opacity-50" : ""
                   }`}
                 >
@@ -505,7 +505,7 @@ export default function TodoItem({
 
               {todo.description && (
                 <p
-                  className={`mt-1.5 wrap-break-words whitespace-pre-wrap text-muted leading-6 ${
+                  className={`mt-1.5 wrap-break-word whitespace-pre-wrap text-muted leading-6 ${
                     todo.completed ? "line-through opacity-50" : ""
                   }`}
                 >

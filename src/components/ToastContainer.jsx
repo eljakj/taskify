@@ -34,7 +34,7 @@ export default function ToastContainer({ notifications, dismissNotification }) {
             </div>
 
             <div className="min-w-0 flex-1">
-              <p className="wrap-break-words text-body font-medium">
+              <p className="wrap-break-word text-body font-medium">
                 {notification.message}
               </p>
               <p className="mt-0.5 text-xs text-white">
