@@ -76,6 +76,14 @@ export default function App() {
       },
       ...prev,
     ]);
+
+    // Each toast gets its own timer, so new toasts do not keep old ones alive.
+    window.setTimeout(
+      () => {
+        setNotifications((prev) => prev.filter((item) => item.id !== id));
+      },
+      type === "error" ? 5000 : 3200,
+    );
   }, []);
 
   const dismissNotification = useCallback((id) => {

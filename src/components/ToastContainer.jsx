@@ -1,20 +1,4 @@
-import { useEffect } from "react";
-
 export default function ToastContainer({ notifications, dismissNotification }) {
-  useEffect(() => {
-    if (notifications.length === 0) return;
-
-    const timers = notifications.map((notification) =>
-      setTimeout(() => {
-        dismissNotification(notification.id);
-      }, 3200),
-    );
-
-    return () => {
-      timers.forEach(clearTimeout);
-    };
-  }, [notifications, dismissNotification]);
-
   if (notifications.length === 0) return null;
 
   return (
