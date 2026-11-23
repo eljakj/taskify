@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import CustomSelect from "@/components/CustomSelect";
 import { formatDisplayDate, todayISO } from "@/utils/date";
-import { MAX_TITLE_LENGTH } from "@/services/todoApi";
+import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "@/services/todoApi";
 import CharCounter from "@/components/CharCounter";
 
 const priorities = [
@@ -109,11 +109,14 @@ export default function TodoForm({ addTodo, isAdding }) {
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        maxLength={MAX_DESCRIPTION_LENGTH}
         placeholder="Add description..."
         rows={5}
         disabled={isAdding}
         className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-base text-zinc-800 outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
       />
+
+      <CharCounter length={description.length} max={MAX_DESCRIPTION_LENGTH} />
 
       <div className="grid gap-2.5 sm:grid-cols-2">
         <div className="rounded-xl border border-zinc-200 bg-white/85 p-3 dark:border-slate-700 dark:bg-slate-900/80">

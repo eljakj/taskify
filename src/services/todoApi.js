@@ -11,6 +11,7 @@ import { normalizeDateOnly } from "@/utils/date";
 const STORAGE_KEY = "taskify.todos.v1";
 const VALID_PRIORITIES = new Set(["low", "medium", "high"]);
 export const MAX_TITLE_LENGTH = 200;
+export const MAX_DESCRIPTION_LENGTH = 2000;
 
 let memoryFallback = null;
 let persistent = true;
@@ -124,6 +125,11 @@ const sanitizePayload = (payload, { requireTitle = false } = {}) => {
   if ("description" in payload) {
     updates.description =
       typeof payload.description === "string" ? payload.description.trim() : "";
+    if (updates.description.length > MAX_DESCRIPTION_LENGTH) {
+      throw new Error(
+        `Description can be at most ${MAX_DESCRIPTION_LENGTH} characters.`,
+      );
+    }
   }
 
   if ("priority" in payload) {
@@ -241,7 +247,12 @@ export const clearCompleted = async () => {
 /** JSON string of all tasks, for backups. */
 export const exportTodos = () =>
   JSON.stringify(
-    { app: "taskify", version: 1, exportedAt: new Date().toISOString(), todos: sortByOrder(readAll()) },
+    {
+      app: "taskify",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      todos: sortByOrder(readAll()),
+    },
     null,
     2,
   );

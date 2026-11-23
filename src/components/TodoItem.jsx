@@ -2,8 +2,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import CustomSelect from "@/components/CustomSelect";
 import { daysFromToday, formatDate, formatDisplayDate } from "@/utils/date";
-import { MAX_TITLE_LENGTH } from "@/services/todoApi";
+import { MAX_DESCRIPTION_LENGTH, MAX_TITLE_LENGTH } from "@/services/todoApi";
 import CharCounter from "@/components/CharCounter";
+import ExpandableText from "@/components/ExpandableText";
 
 const priorityOptions = [
   { value: "low", label: "Low" },
@@ -401,9 +402,15 @@ export default function TodoItem({
               <textarea
                 value={editedDescription}
                 onChange={(e) => setEditedDescription(e.target.value)}
+                maxLength={MAX_DESCRIPTION_LENGTH}
                 rows={10}
                 disabled={isSaving}
                 className="w-full resize-none rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-base text-zinc-800 outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+              />
+
+              <CharCounter
+                length={editedDescription.length}
+                max={MAX_DESCRIPTION_LENGTH}
               />
 
               <div className="grid gap-2.5 sm:grid-cols-2">
@@ -509,13 +516,12 @@ export default function TodoItem({
               )}
 
               {todo.description && (
-                <p
+                <ExpandableText
+                  text={todo.description}
                   className={`mt-1.5 wrap-break-word whitespace-pre-wrap text-muted leading-6 ${
                     todo.completed ? "line-through opacity-50" : ""
                   }`}
-                >
-                  {todo.description}
-                </p>
+                />
               )}
             </>
           )}
