@@ -5,8 +5,12 @@ const STORAGE_KEY = "theme";
 const getStoredTheme = () => {
   if (typeof window === "undefined") return null;
 
-  const value = localStorage.getItem(STORAGE_KEY);
-  return value === "light" || value === "dark" ? value : null;
+  try {
+    const value = localStorage.getItem(STORAGE_KEY);
+    return value === "light" || value === "dark" ? value : null;
+  } catch {
+    return null;
+  }
 };
 
 const getSystemTheme = () => {
@@ -27,7 +31,11 @@ export function useTheme() {
 
     root.classList.toggle("dark", resolvedTheme === "dark");
     root.style.colorScheme = resolvedTheme;
-    localStorage.setItem(STORAGE_KEY, resolvedTheme);
+    try {
+      localStorage.setItem(STORAGE_KEY, resolvedTheme);
+    } catch {
+      // Storage blocked: theme still works, it is just not remembered.
+    }
   }, [theme]);
 
   useEffect(() => {
