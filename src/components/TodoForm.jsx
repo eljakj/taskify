@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import CustomSelect from "@/components/CustomSelect";
 import { formatDisplayDate, todayISO } from "@/utils/date";
 import { MAX_TITLE_LENGTH } from "@/services/todoApi";
+import CharCounter from "@/components/CharCounter";
 
 const priorities = [
   { value: "low", label: "Low" },
@@ -102,6 +103,8 @@ export default function TodoForm({ addTodo, isAdding }) {
         disabled={isAdding}
         className="w-full rounded-xl border border-zinc-200 bg-white/90 px-4 py-2.5 text-base text-zinc-800  outline-none hover:border-indigo-500 focus:border-indigo-500 sm:px-5 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
       />
+
+      <CharCounter length={title.length} max={MAX_TITLE_LENGTH} />
 
       <textarea
         value={description}
