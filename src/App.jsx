@@ -106,7 +106,7 @@ export default function App() {
       } catch (error) {
         console.error(error);
 
-        setErrorMessage("Failed to load todos from server.");
+        setErrorMessage("Failed to load tasks from this browser.");
         pushNotification("Failed to load todos", "error");
       } finally {
         setIsLoading(false);
@@ -177,7 +177,7 @@ export default function App() {
       });
 
       if (!newTodo) {
-        throw new Error("No todo returned from server.");
+        throw new Error("Task could not be created.");
       }
 
       setTodos((prevTodos) => [...prevTodos, newTodo]);
@@ -205,7 +205,7 @@ export default function App() {
       });
 
       if (!updatedTodo) {
-        throw new Error("No updated todo returned from server.");
+        throw new Error("Task could not be updated.");
       }
 
       setTodos((prevTodos) =>
@@ -234,7 +234,7 @@ export default function App() {
       setTodos(Array.isArray(updatedTodos) ? updatedTodos : []);
 
       pushNotification(
-        nextCompletedValue ? "All tasks selected" : "All tasks deselected",
+        nextCompletedValue ? "All tasks completed" : "All tasks marked active",
       );
     } catch (error) {
       console.error(error);
@@ -288,7 +288,7 @@ export default function App() {
       const updatedTodo = await updateTodo(id, updatedFields);
 
       if (!updatedTodo) {
-        throw new Error("No updated todo returned from server.");
+        throw new Error("Task could not be updated.");
       }
 
       setTodos((prevTodos) =>
@@ -451,7 +451,7 @@ export default function App() {
       const savedTodos = await reorderTodos(orderedIds);
 
       if (!Array.isArray(savedTodos)) {
-        throw new Error("No reordered todos returned from server.");
+        throw new Error("Task order could not be saved.");
       }
 
       setTodos(savedTodos);

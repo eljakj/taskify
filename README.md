@@ -28,7 +28,7 @@ No account, no server, no tracking: your tasks stay in your browser.
 You need Node.js 20 or newer.
 
 ```bash
-git clone https://github.com/<your-user>/taskify.git
+git clone https://github.com/eljakj/taskify.git
 cd taskify
 npm install
 npm run dev
