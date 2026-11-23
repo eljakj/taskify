@@ -1,5 +1,7 @@
 # Taskify
 
+![CI](https://github.com/eljakj/taskify/actions/workflows/ci.yml/badge.svg)
+
 A clean, local-first task manager built with React and Tailwind CSS.
 No account, no server, no tracking: your tasks stay in your browser.
 
