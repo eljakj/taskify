@@ -20,25 +20,26 @@ const getSystemTheme = () => {
     : "light";
 };
 
+const MODES = ["system", "light", "dark"];
+
 export function useTheme() {
-  const [theme, setTheme] = useState(
-    () => getStoredTheme() ?? getSystemTheme(),
-  );
+  const [mode, setMode] = useState(() => getStoredTheme() ?? "system");
+  const [systemTheme, setSystemTheme] = useState(getSystemTheme);
+
+  const theme = mode === "system" ? systemTheme : mode;
 
   useEffect(() => {
     const root = document.documentElement;
-    const resolvedTheme = theme === "dark" ? "dark" : "light";
 
-    root.classList.toggle("dark", resolvedTheme === "dark");
-    root.style.colorScheme = resolvedTheme;
+    root.classList.toggle("dark", theme === "dark");
+    root.style.colorScheme = theme;
   }, [theme]);
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
     const handleChange = (event) => {
-      if (getStoredTheme()) return;
-      setTheme(event.matches ? "dark" : "light");
+      setSystemTheme(event.matches ? "dark" : "light");
     };
 
     media.addEventListener("change", handleChange);
@@ -46,15 +47,19 @@ export function useTheme() {
   }, []);
 
   const toggleTheme = () => {
-    const next = theme === "dark" ? "light" : "dark";
-    setTheme(next);
+    const next = MODES[(MODES.indexOf(mode) + 1) % MODES.length];
+    setMode(next);
 
     try {
-      localStorage.setItem(STORAGE_KEY, next);
+      if (next === "system") {
+        localStorage.removeItem(STORAGE_KEY);
+      } else {
+        localStorage.setItem(STORAGE_KEY, next);
+      }
     } catch {
       // Storage blocked: theme still works, it is just not remembered.
     }
   };
 
-  return { theme, toggleTheme };
+  return { theme, mode, toggleTheme };
 }

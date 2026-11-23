@@ -1,14 +1,46 @@
-export default function ThemeToggle({ theme, toggleTheme }) {
+const modeLabels = {
+  system: "Theme: System",
+  light: "Theme: Light",
+  dark: "Theme: Dark",
+};
+
+export default function ThemeToggle({ theme, mode, toggleTheme }) {
   const isDark = theme === "dark";
+  const label = modeLabels[mode] ?? "Toggle theme";
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      aria-label="Toggle theme"
+      aria-label={label}
+      title={label}
       className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 hover:-translate-y-0.5 hover:bg-zinc-100 active:scale-[0.96] dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:bg-slate-800"
     >
-      {isDark ? (
+      {mode === "system" ? (
+        // 🖥️ Monitor (system mode)
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          className="h-4 w-4"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="3"
+            y="4"
+            width="18"
+            height="12"
+            rx="2"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+          <path
+            d="M8 20H16M12 16V20"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
+        </svg>
+      ) : isDark ? (
         // 🌙 Moon (dark mode)
         <svg
           viewBox="0 0 24 24"

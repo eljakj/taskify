@@ -42,7 +42,7 @@ const initialConfirmState = {
 };
 
 export default function App() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, mode, toggleTheme } = useTheme();
 
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState("all");
@@ -500,7 +500,7 @@ export default function App() {
       />
 
       <main className="mx-auto max-w-3xl pb-[max(1rem,env(safe-area-inset-bottom))] pt-[env(safe-area-inset-top)]">
-        <Header theme={theme} toggleTheme={toggleTheme} />
+        <Header theme={theme} mode={mode} toggleTheme={toggleTheme} />
 
         <StatsBar
           total={totalCount}
