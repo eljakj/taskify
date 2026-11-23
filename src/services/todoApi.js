@@ -10,6 +10,7 @@ import { normalizeDateOnly } from "@/utils/date";
 
 const STORAGE_KEY = "taskify.todos.v1";
 const VALID_PRIORITIES = new Set(["low", "medium", "high"]);
+export const MAX_TITLE_LENGTH = 200;
 
 let memoryFallback = null;
 let persistent = true;
@@ -114,6 +115,9 @@ const sanitizePayload = (payload, { requireTitle = false } = {}) => {
   if ("title" in payload || requireTitle) {
     const title = typeof payload.title === "string" ? payload.title.trim() : "";
     if (!title) throw new Error("Title is required.");
+    if (title.length > MAX_TITLE_LENGTH) {
+      throw new Error(`Title can be at most ${MAX_TITLE_LENGTH} characters.`);
+    }
     updates.title = title;
   }
 

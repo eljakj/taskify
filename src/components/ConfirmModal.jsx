@@ -50,7 +50,7 @@ export default function ConfirmModal({
               {title}
             </h2>
 
-            <p className="mt-1.5 wrap-anywhere text-body leading-6 text-zinc-500 dark:text-slate-400">
+            <p className="mt-1.5 line-clamp-4 wrap-anywhere text-body leading-6 text-zinc-500 dark:text-slate-400">
               {message}
             </p>
           </div>
