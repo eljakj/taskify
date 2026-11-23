@@ -1,7 +1,7 @@
 import { useRef } from "react";
-import { exportTodos, importTodos } from "@/services/todoApi";
+import { exportTodos, parseImport } from "@/services/todoApi";
 
-export default function DataMenu({ onImported, onError }) {
+export default function DataMenu({ onImportRequest, onError }) {
   const fileInputRef = useRef(null);
 
   const handleExport = () => {
@@ -32,8 +32,7 @@ export default function DataMenu({ onImported, onError }) {
 
     try {
       const text = await file.text();
-      const imported = await importTodos(text);
-      onImported(imported);
+      onImportRequest(parseImport(text));
     } catch (error) {
       console.error(error);
       onError(error.message || "Import failed");

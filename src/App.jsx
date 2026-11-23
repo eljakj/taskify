@@ -21,6 +21,7 @@ import {
   setAllTodosCompleted,
   removeTodo,
   clearCompleted,
+  replaceTodos,
   isStoragePersistent,
 } from "@/services/todoApi";
 
@@ -39,6 +40,7 @@ const initialConfirmState = {
   isDanger: false,
   type: null,
   todoId: null,
+  importedTodos: null,
 };
 
 export default function App() {
@@ -94,7 +96,6 @@ export default function App() {
         setTodos(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error(error);
-
 
         setErrorMessage("Failed to load todos from server.");
         pushNotification("Failed to load todos", "error");
@@ -169,7 +170,6 @@ export default function App() {
     } catch (error) {
       console.error(error);
 
-
       setErrorMessage(error.message || "Failed to add todo.");
       pushNotification("Failed to add task", "error");
       return false;
@@ -202,7 +202,6 @@ export default function App() {
     } catch (error) {
       console.error(error);
 
-
       setErrorMessage(error.message || "Failed to update todo.");
       pushNotification("Failed to update task", "error");
     }
@@ -223,7 +222,6 @@ export default function App() {
       );
     } catch (error) {
       console.error(error);
-
 
       setErrorMessage(error.message || "Failed to update all todos.");
       pushNotification("Failed to update all todos", "error");
@@ -247,7 +245,6 @@ export default function App() {
       pushNotification("Task deleted");
     } catch (error) {
       console.error(error);
-
 
       setErrorMessage(error.message || "Failed to delete todo.");
       pushNotification("Failed to delete task", "error");
@@ -287,7 +284,6 @@ export default function App() {
     } catch (error) {
       console.error(error);
 
-
       setErrorMessage(error.message || "Failed to edit todo.");
       pushNotification("Failed to update task", "error");
       return false;
@@ -314,7 +310,6 @@ export default function App() {
     } catch (error) {
       console.error(error);
 
-
       setErrorMessage(error.message || "Failed to clear completed todos.");
       pushNotification("Failed to clear completed tasks", "error");
     }
@@ -333,8 +328,46 @@ export default function App() {
     });
   };
 
+  const importTodos = async (importedTodos) => {
+    try {
+      const savedTodos = await replaceTodos(importedTodos);
+      setTodos(savedTodos);
+      setErrorMessage("");
+      pushNotification(`${savedTodos.length} tasks imported`);
+    } catch (error) {
+      console.error(error);
+      pushNotification(error.message || "Import failed", "error");
+    }
+  };
+
+  const requestImport = (importedTodos) => {
+    // Nothing to lose yet: import right away.
+    if (normalizedTodos.length === 0) {
+      importTodos(importedTodos);
+      return;
+    }
+
+    setConfirmState({
+      isOpen: true,
+      title: "Replace all tasks?",
+      message: `Your ${normalizedTodos.length} current tasks will be replaced by ${importedTodos.length} tasks from the file. Export first if you want a backup.`,
+      confirmText: "Replace",
+      cancelText: "Cancel",
+      isDanger: true,
+      type: "import",
+      todoId: null,
+      importedTodos,
+    });
+  };
+
   const handleConfirmAction = async () => {
-    const { type, todoId } = confirmState;
+    const { type, todoId, importedTodos } = confirmState;
+
+    if (type === "import" && importedTodos) {
+      setConfirmState(initialConfirmState);
+      await importTodos(importedTodos);
+      return;
+    }
 
     if (type === "delete" && todoId) {
       setIsConfirmLoading(true);
@@ -409,7 +442,6 @@ export default function App() {
       pushNotification("Task order updated");
     } catch (error) {
       console.error(error);
-
 
       setErrorMessage(error.message || "Failed to save todo order.");
       pushNotification("Failed to save task order", "error");
@@ -587,11 +619,7 @@ export default function App() {
           )}
 
           <DataMenu
-            onImported={(importedTodos) => {
-              setTodos(importedTodos);
-              setErrorMessage("");
-              pushNotification("Tasks imported");
-            }}
+            onImportRequest={requestImport}
             onError={(message) => pushNotification(message, "error")}
           />
         </section>

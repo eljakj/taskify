@@ -257,8 +257,8 @@ export const exportTodos = () =>
     2,
   );
 
-/** Replaces all tasks with the ones in a Taskify backup. Returns the new list. */
-export const importTodos = async (jsonText) => {
+/** Reads a Taskify backup and returns its valid tasks. Saves nothing. */
+export const parseImport = (jsonText) => {
   let parsed;
 
   try {
@@ -279,5 +279,8 @@ export const importTodos = async (jsonText) => {
     throw new Error("None of the tasks in this file are valid.");
   }
 
-  return writeAll(cleaned);
+  return cleaned;
 };
+
+/** Replaces all tasks with the given list. Returns the saved list. */
+export const replaceTodos = async (todos) => writeAll(sanitizeList(todos));
